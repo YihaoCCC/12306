@@ -1,8 +1,10 @@
 <template>
 <div class="search-box">
+    <div class="imgbox">
+    </div>
         <div class="searchHeader"> 
             <div class="title">
-
+                
             </div>
             <div class="train">
                 <div class="citybetween">
@@ -50,7 +52,9 @@ import { ref, defineProps, onMounted } from 'vue';
 import {useRouter}  from 'vue-router'
 const props = defineProps({
     width: String,
-    showBackImg: Boolean,
+    showImgBox: String,
+    transitonY: String,
+    radius: String
 })
 onMounted(() => {
     console.log(props);
@@ -62,17 +66,29 @@ const change = () => {
     }
 const search = () => {
     router.push({
-        path: 'search/shanghai/beijing/2022-8-03'
+       name: 'search',
+       params: {
+        scity: 'shanghai',
+        ecity: 'beijing',
+        time: '2022-8-03'
+       }
     })
 }
 </script>
     
 <style lang="scss" scoped>
 .search-box {
+    
+    position: relative;
+}
+.imgbox {
     background-image: url("https://images3.c-ctrip.com/train/activity/ctrip-order-static/top-online.png");
     background-repeat: no-repeat;
     background-size: cover;
     height: 300px;
+    width: 100%;
+    position: absolute;
+    display: v-bind(showImgBox);
 }
     label {
         color: #999;
@@ -81,13 +97,14 @@ const search = () => {
         display: block;
     }
     .searchHeader {
+        left: 17%;
         transition: all .5s linear;
         width: v-bind(width);
         height: 200px;
         background-color: #fff;
-        border-radius: 20px;
+        border-radius: v-bind(radius);
         margin: auto;
-        transform: translateY(110px);
+        transform: translateY(v-bind(transitonY));
         padding: 10px 20px;
         box-sizing: border-box;     
         box-shadow: 0 4px 16px rgb(69 88 115 / 20%);
