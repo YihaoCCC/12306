@@ -5,6 +5,7 @@ import {
     ElButton,
     ElAvatar,
     ElDialog,
+    ElDatePicker,
 }
 from 'element-plus'
 
@@ -14,6 +15,7 @@ const component = [
     ElButton,
     ElAvatar,
     ElDialog,
+    ElDatePicker
 ]
 
 export function useElementPlus(app:App):void {

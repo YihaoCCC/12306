@@ -9,11 +9,14 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-body html {
+body,html {
   margin: 0;
   padding: 0;
 }
 
+body::-webkit-scrollbar{
+  display:none
+}
 /* button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -36,10 +39,16 @@ button:focus-visible {
 
 
 #app {
-  max-width: 1280px;
+  max-width: 100%;
 
 }
-
+.el-input__wrapper {
+  border: none !important;
+  font-size: 23px !important;
+  padding: 0 !important;
+  font-weight: bolder !important;
+  box-shadow: none !important;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

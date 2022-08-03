@@ -15,6 +15,10 @@ const routes = [
                 component: () => import('../views/dashbord/dashbord.vue')
             },
             {
+                path: 'search/:scity/:endcity/:time',
+                component: () => import('../views/search/index.vue')
+            },
+            {
                 path: 'profile',
                 component: () => import('../views/profile/profile.vue')
             }
