@@ -15,7 +15,8 @@ const routes = [
                 component: () => import('../views/dashbord/dashbord.vue')
             },
             {
-                path: 'search/:scity/:endcity/:time',
+                path: 'search/:scity/:ecity/:time',
+                name: 'search',
                 component: () => import('../views/search/index.vue')
             },
             {
