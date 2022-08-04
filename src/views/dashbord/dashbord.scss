@@ -1,0 +1,49 @@
+.dashbord {
+    width: 100%;
+    height: 600px;
+    margin: 10px 0;
+    .hotel {
+            .citys {
+                margin-bottom: 30px;
+                text-align: center;
+                button {
+                    margin: 0 10px;
+                    height: 45px;
+                    width: 80px;
+                    box-sizing: border-box;
+                    border: 1px solid #b0b0b0;
+                    border-radius: 10px;
+                    padding: 10px 24px;
+                    color: #8f8f8f;
+                    background-color: #F8FAFD;
+                    cursor: pointer;
+                    transition: all .3s ease-in-out;
+                    &:hover {
+                        transform: scale(1.2);
+                        background-color: #60b5fa;
+                        color: #fff;
+                    }
+                }
+                .active {
+                    background-color: #60b5fa;
+                    color: #fff;
+                }
+            
+        }
+        .hotelList {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+    
+    
+}
+.floor {
+    max-width: 1200px;
+    margin: auto;   
+    height: 1200px;   
+    h1 {
+        text-align: center;
+    }
+}
