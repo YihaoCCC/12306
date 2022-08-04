@@ -7,11 +7,13 @@ const routes = [
     },
     {
         path: '/home',
+        name: 'home',
         component: () => import('../views/home/home.vue'), 
         redirect: '/home/dashbord', 
         children: [
             {
                 path: 'dashbord',
+                name: 'dashbord',
                 component: () => import('../views/dashbord/dashbord.vue')
             },
             {
@@ -21,13 +23,20 @@ const routes = [
             },
             {
                 path: 'profile',
+                name: 'profile',
                 component: () => import('../views/profile/profile.vue')
             }
         ]
     },
     {
         path: '/login',
+        name: 'login',
         component: () => import('../views/login/login.vue')
+    },
+    {
+        path: '/regiter',
+        name: 'register',
+        component: () => import('../views/registe/registe.vue')
     }
 ]
 

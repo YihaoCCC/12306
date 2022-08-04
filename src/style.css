@@ -13,7 +13,9 @@ body,html {
   margin: 0;
   padding: 0;
 }
-
+body {
+  cursor: url('./utils/default.cur'),auto;
+}
 body::-webkit-scrollbar{
   display:none
 }

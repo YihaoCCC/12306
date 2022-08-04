@@ -7,11 +7,11 @@
             </div>
             <img :src="img" alt="">
             
-            <h3 class="imgtext" v-if="showImgText">{{imgTitle}}</h3>
-            <span class="imgtext" v-if="showImgText">{{imgscript}}</span>
+            <h3 class="imgtext" v-if="showImgText">{{city}}</h3>
+            <span class="imgtext" v-if="showImgText">{{describe}}</span>
         
         </div>
-        <div class="hotel-detail">
+        <div class="hotel-detail" v-if="showDetail">
             <div class="name">
                 {{name}}
             </div>
@@ -53,11 +53,16 @@
             type: Boolean,
             default: false
         },
-        imgTitle: {
+        // 详情
+        showDetail: {
+            type: Boolean,
+            default: false
+        },
+        city: {
             type: String,
             default: '京沪高铁'
         },
-        imgscript: {
+        describe: {
             type: String,
             default: '千里京沪一日还'
         }
@@ -67,8 +72,8 @@
 <style lang="scss" scoped>
     .card-box {
         width: 260px;
-        height: 260px;
-        cursor: pointer;
+        border-radius: 20px;
+        box-shadow: 2px 2px 5px rgba(72, 140, 235, 0.351);
         .hotel-img {
             width: 100%;
             height: 164px;
@@ -131,7 +136,7 @@
         }
         .hotel-detail {
             margin: 10px 0;
-            padding: 0 5px;
+            padding: 0 15px;
             .name {
                 margin: 6px 0;
                 font-size: 16px;

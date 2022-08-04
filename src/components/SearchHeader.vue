@@ -17,8 +17,7 @@
                     <div class="change">
                         <svg  @click="change" t="1659422665218" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2575" width="24" height="24"><path d="M900.160222 227.959537a31.994321 31.994321 0 0 0-9.758268 43.992192 447.920494 447.920494 0 1 1-139.655212-139.335268 31.994321 31.994321 0 0 0 34.233924-54.070403 511.909136 511.909136 0 1 0 159.971605 159.171747 31.994321 31.994321 0 0 0-44.792049-9.758268z" fill="#666666" p-id="2576"></path><path d="M255.954568 415.926173a31.994321 31.994321 0 0 0 31.994321 31.994321h447.920494a31.994321 31.994321 0 0 0 22.555996-54.550317l-127.977284-127.977284a31.994321 31.994321 0 0 0-45.271964 45.271964L658.603098 383.931852H287.948889a31.994321 31.994321 0 0 0-31.994321 31.994321zM767.863704 607.892099a31.994321 31.994321 0 0 0-31.994321-31.994321H287.948889a31.994321 31.994321 0 0 0-22.555996 54.550317l127.977284 127.977284a31.994321 31.994321 0 0 0 45.271964-45.271964L365.215174 639.88642H735.869383a31.994321 31.994321 0 0 0 31.994321-31.994321z" fill="#666666" p-id="2577"></path></svg>
                     </div>
-                    <div class="endcity">
-                        
+                    <div class="endcity">                       
                         <input type="text" id="end" placeholder="到达城市">
                         <label for="end">
                             到达城市 
@@ -54,7 +53,8 @@ const props = defineProps({
     width: String,
     showImgBox: String,
     transitonY: String,
-    radius: String
+    radius: String,
+    shadow: String
 })
 onMounted(() => {
     console.log(props);
@@ -107,7 +107,7 @@ const search = () => {
         transform: translateY(v-bind(transitonY));
         padding: 10px 20px;
         box-sizing: border-box;     
-        box-shadow: 0 4px 16px rgb(69 88 115 / 20%);
+        box-shadow: v-bind(shadow);
         .title {
             height: 50px;
             width: 100%;
@@ -172,7 +172,8 @@ const search = () => {
                     border-right: 1px solid #999;
                     position: absolute;
                     bottom: 29px;
-                    right: 60px;
+                    right: 88px;
+                    width: 1px;
                     height: 12px;
                     transform: scale(2);
                 }

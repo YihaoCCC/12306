@@ -1,6 +1,5 @@
 .dashbord {
     width: 100%;
-    height: 600px;
     margin: 10px 0;
     .hotel {
             .citys {
@@ -30,19 +29,17 @@
                 }
             
         }
-        .hotelList {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        
     }
-    
-    
+}
+.hotelList, .cityList{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .floor {
     max-width: 1200px;
-    margin: auto;   
-    height: 1200px;   
+    margin: auto;      
     h1 {
         text-align: center;
     }
