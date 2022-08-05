@@ -1,6 +1,7 @@
 <template>
     <div class="login">
-        <div class="header myFont">
+        <div class="header myFont" @click="goIndex">
+            <img src="https://webresource.c-ctrip.com/ares2/nfes/pc-home/1.0.65/default/image/logo.png" alt="">
             一起去旅行
         </div>
         <div class="content">
@@ -56,10 +57,13 @@
 </template>
     
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router';
 import Registe from '../registe/registe.vue';
+
+const vue = getCurrentInstance()
+const goIndex = vue?.appContext.config.globalProperties.$goIndex
 const username = ref('')
 const password = ref('')
 const router = useRouter()

@@ -47,16 +47,25 @@
                 ￥ <span>553</span>
             </div>
         </div>
+        <div class="order" @click="showListDetail">订</div>
+
+    </div>
+    <div class="listDetail" :class="showList ? 'showAnimate' : ''">
+
     </div>
 </template>
     
 <script setup lang='ts'>
-
+import { ref } from 'vue'
+const showList = ref(false)
+const showListDetail = () => {
+    showList.value = !showList.value
+}
 </script>
     
 <style lang="scss" scoped>
 .card {
-    width: 780px;
+    width: 70%;
     height: 100px;
     background-color: #fff;
     margin: 20px 0;
@@ -77,13 +86,30 @@
             font-weight: 700;
         }
     }
-
+    .order {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        background-color: #0086f6;
+        line-height: 50px;
+        padding: 0 16px;
+        box-sizing: border-box;
+        color: #fff;
+        font-weight: 600;
+    }
+   
     &:hover {
         transform: scale(1.02);
     }
 }
+    .listDetail {
+        height: 0px;
+        width: 70%;
+        background-color: #fff;
+        border-radius: 8px;
+        transition: all .5s ease-in-out;
+    }
+    .showAnimate {
+        height: 200px;
+    }
 </style>
-
-content: "\00A5";
-    font-size: 15px;
-    margin-right: 2px;

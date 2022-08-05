@@ -2,7 +2,7 @@
     <div class="registeForm" :class="show ? 'showRegister' : '' ">
         <h1 class="myFont">注册您的账户</h1>
         <div class="register" @click="goLogin">
-            <span>立即登录</span>
+            已有账号？<span>立即登录</span>
             <svg t="1647575940578" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 p-id="1152" width="24" height="24">
                 <path
@@ -32,7 +32,7 @@
         </div>
 
         <button @click="register">
-            我要注册
+            立即注册
         </button>
     </div>
 </template>

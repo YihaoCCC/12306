@@ -14,3 +14,49 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+
+### 记录一些问题
+
+#### 1:`transition` 和 `animate` 的选择
+
+做展开订票信息的时候，需要慢慢展开盒子，两种动画到底用哪个？
+
+`transition` 动画：有来有回
+
+```css
+.listDetail {
+    height: 0px;
+    width: 100%;
+    transition: all .5s ease-in-out;
+}
+// 这个class实在点击之后会通过一个变量添加到盒子上 
+// 通过transition可以让动画有来有回
+// 即展开和关闭都有动画，
+.showAnimate {
+    height: 150px;
+}
+```
+`animation` 动画：有来无回
+
+```css
+// keyframes虽然也能实现效果，但是更多的是用在复杂动效，且只有一次
+// 从0% ~ 100% 的每帧都能定义
+// "有来无回"
+// 通过`forwwards`才能让动画保持到100%（最后一帧） 
+.listDetail {
+    height: 0px;
+    width: 100%;
+    }
+.showAnimate {
+    animation: show 0.5s ease-in-out forwards;
+}
+@keyframes show {
+    from {
+        height: 0;
+    }
+    to {
+        height: 150px;
+    }
+}
+```
