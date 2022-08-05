@@ -52,7 +52,9 @@
             showPlaceHoder.value = true
             boxShadow.value = '0 4px 16px rgb(69 88 115 / 20%)'
         }        
-    })
+    },
+    { deep: true , immediate: true }
+    )
 </script>
     
 <style scoped lang="scss">

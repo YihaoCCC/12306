@@ -12,6 +12,7 @@
 body,html {
   margin: 0;
   padding: 0;
+  --color-title: #fff;
 }
 body {
   cursor: url('./utils/default.cur'),auto;
@@ -44,7 +45,7 @@ button:focus-visible {
   max-width: 100%;
 
 }
-.el-input__wrapper {
+.datatime .el-input__wrapper {
   border: none !important;
   font-size: 23px !important;
   padding: 0 !important;
@@ -63,3 +64,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.SafeContent {
+  width: 1200px;
+  margin: auto;
+}
+

@@ -19,7 +19,7 @@ const routes = [
             {
                 path: 'search/:scity/:ecity/:time',
                 name: 'search',
-                component: () => import('../views/search/index.vue')
+                component: () => import('../views/search/search.vue')
             },
             {
                 path: 'profile',
@@ -34,8 +34,8 @@ const routes = [
         component: () => import('../views/login/login.vue')
     },
     {
-        path: '/regiter',
-        name: 'register',
+        path: '/registe',
+        name: 'registe',
         component: () => import('../views/registe/registe.vue')
     }
 ]
@@ -43,5 +43,17 @@ const routes = [
 export const router:Router = createRouter({
     routes,
     history: createWebHashHistory()
+})
+
+router.beforeEach((to, from, next) => {
+    if(to.name === 'order') {
+        if(localStorage.getItem('token')) {
+            next()
+        } else {
+            next('/login')
+        }
+    } else {
+        next()
+    }
 })
 

@@ -1,3 +1,80 @@
-.registe {
-    width: 100%;
+
+ .showRegister {
+    right: 0 !important; 
 }
+.registeForm {
+    position: absolute;
+    width: 420px;
+    height: 470px;
+    border-radius: 20px;
+    background-color: rgb(235, 235, 235);
+    padding: 50px 50px;
+    box-sizing: border-box;
+    right: -600px;
+    transition: all .5s ease-in-out;
+    .register {
+        margin: 20px 0;
+        font-size: 16px;
+        font-weight: bold;
+        color: #888;
+        display: flex;
+        align-items: center;
+        span {
+            color: #009DFF;
+        }
+        svg {
+            margin-left: 10px;
+            transform: rotate(90deg);
+        }
+    }
+    h1 {
+        margin: 0;
+        font-size: 40px;
+        letter-spacing: 6px;
+    }
+
+    .form {
+        margin-top: 30px;
+        .inputbox {
+            width: 90%;
+            margin: 30px auto 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            svg {
+                margin-right: 10px;
+            }
+        }
+    }
+    button {
+        width: 100%;
+        height: 50px;
+        margin: 50px auto 0 auto;
+        border-radius: 20px;
+        background-color: #009DFF;
+        color: #fff;
+        border: none;
+        font-size: 20px;
+        &:hover {
+            box-shadow: 5px 10px 30px rgba(70, 195, 223, 0.427);
+        }
+    }
+}
+.myFont {
+    font-family: Comic Sans MS,Helvetica Neue,Microsoft Yahei,-apple-system,sans-serif ;
+    font-size: 4.7rem ;
+    font-weight: 200;
+    line-height: 1;
+
+    animation: whiteShadow 1.5s ease-in-out  alternate;
+    text-shadow: #452d2d 0 0 1px, #fffffb 0 0 1px, #fffffb 0 0 2px;
+  }
+  
+  @keyframes whiteShadow {
+    0% {
+      text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 5px #333, 0 0 8px #333, 0 0 9px #333, 0 0 10px #333, 0 0 15px #333;
+    }
+    100% {
+      text-shadow: 0 0 0.5px #fff, 0 0 1px #fff, 0 0 1.5px #fff, 0 0 2px #333, 0 0 4px #333, 0 0 5px #333, 0 0 6px #333, 0 0 8px #333;
+    }
+  }
