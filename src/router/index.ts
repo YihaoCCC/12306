@@ -1,3 +1,4 @@
+import { ElMessage } from "element-plus";
 import { Router,createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
                 path: 'search/:scity/:ecity/:time',
                 name: 'search',
                 component: () => import('../views/search/search.vue')
+            },
+            {
+                path: 'book/:scity/:ecity/:time/:ticketType',
+                name: 'book',
+                component: () => import('../views/book/book.vue')
             },
             {
                 path: 'profile',
@@ -46,10 +52,14 @@ export const router:Router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.name === 'order') {
+    if(to.name === 'book') {
         if(localStorage.getItem('token')) {
             next()
         } else {
+            ElMessage({
+                type :'warning',
+                message: '对不起，您还未登录！'
+            })
             next('/login')
         }
     } else {

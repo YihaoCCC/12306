@@ -2,21 +2,19 @@
     <div class="card">
         <div class="listOpen">
             <div class="time">
-                06:20
+                {{ticket.startTime}}
             </div>
             <div class="city">
-                北京南
+                {{ticket.startCity}}
             </div>
         </div>
         <div class="duringTime">
             <div class="haoshi">
-                5时30分
+                {{ticket.haoshi}}
             </div>
-            <div class="line">
-
-            </div>
+            <div class="line"></div>
             <div class="checi">
-                <span>G103</span>
+                <span>{{ticket.checi}}</span>
                 <svg t="1659703610329" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="3077" width="16" height="16">
                     <path
@@ -36,39 +34,124 @@
         </div>
         <div class="listto">
             <div class="time">
-                11:29
+                {{ticket.endTime}}
             </div>
             <div class="city">
-                上海虹桥
+                {{ticket.endCity}}
             </div>
         </div>
         <div class="priceBox">
             <div class="price">
-                ￥ <span>553</span>
+                ￥ <span>{{ticket.price}}</span>
+            </div>
+            <div class="torage">
+                8月22日12:30开售,可预约抢票,开售自动抢
             </div>
         </div>
-        <div class="order" @click="showListDetail">订</div>
-
+        <div class="order" :style="showList ? 'background: #f70' : ''" @click="showListDetail">订</div>
+        <div class="qiang">
+            <span>抢票成功率：较高</span>
+        </div>
     </div>
     <div class="listDetail" :class="showList ? 'showAnimate' : ''">
-
+        <div class="type">
+            二等座
+            <div class="priceBox">
+                <div class="price">
+                    ￥ <span>{{ticket.priceList.erdeng}}</span>
+                </div>
+                <div class="button" @click="book(2)">抢票</div>
+            </div> 
+        </div>
+        <div class="type">
+            一等座
+            <div class="priceBox">
+                <div class="price">
+                    ￥ <span>{{ticket.priceList.yideng}}</span>
+                </div>
+                <div class="button" @click="book(1)">抢票</div>
+            </div> 
+        </div>
+        <div class="type">
+            商务座
+            <div class="priceBox">
+                <div class="price">
+                    ￥ <span>{{ticket.priceList.shangwu}}</span>
+                </div>
+                <div class="button" @click="book(0)">抢票</div>
+            </div> 
+        </div>
     </div>
 </template>
     
 <script setup lang='ts'>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+defineProps({
+    ticket: {
+        type :Object,
+        default : () => {
+            return {
+                startTime: '06:20',
+                startCity: '北京南',
+                haoshi: '5时30分',
+                checi: 'G103',
+                endTime: '11:29',
+                endCity: '上海虹桥',
+                price: '553',
+                priceList: {
+                        erdeng: '553',
+                        yideng: '689',
+                        shangwu: '1028'
+                }
+            }
+        }
+    }
+})
+const router = useRouter()
 const showList = ref(false)
 const showListDetail = () => {
     showList.value = !showList.value
 }
+const book = (ticketType:number) => {
+    router.push({
+        name: 'book',
+        params: {
+            ticketType,
+            scity: 'shanghai',
+            ecity: 'beijing',
+            time: '2022-8-03'
+        }
+    })
+}
 </script>
     
 <style lang="scss" scoped>
+.city {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+.time {
+    font-size: 24px;
+    font-weight: 700;
+}
+.priceBox {
+        width: 240px;
+        color: #0086f6;
+        margin-left: 60px;
+        display: flex;
+        justify-content: end;
+        flex-direction: column;
+        .price {
+            text-align: end;
+        }
+}
 .card {
     width: 70%;
     height: 100px;
     background-color: #fff;
-    margin: 20px 0;
+    margin: 16px 0;
     box-shadow: 0 2px 10px rgb(187, 187, 187);
     border-radius: 10px;
     transition: all .3s ease-in-out;
@@ -77,13 +160,48 @@ const showListDetail = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    .listOpen {
+        .time {
+            color: #0072d1;
+        }
+    }
+    .duringTime {
+        color: #999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        .haoshi {
+            font-size: 14px;   
+        }
+        .line {
 
+            background: url(https://images3.c-ctrip.com/train/activity/ctrip-order-static/icon-fromto.png) no-repeat;
+            width: 100%;
+            height: 10px;
+            margin: 2px 0 6px 0;
+            background-position: 100% 90%;
+
+        }
+        .checi {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+                margin-left: 5px;
+            }
+        }
+    }
     .priceBox {
-        width: 80px;
-        color: #0086f6;
         span {
             font-size: 24px;
             font-weight: 700;
+        }
+        .torage {
+            text-align: end;
+            font-size: 12px;
+            color: #f70;
         }
     }
     .order {
@@ -96,10 +214,23 @@ const showListDetail = () => {
         box-sizing: border-box;
         color: #fff;
         font-weight: 600;
+        transition: all .3s ease-in-out;
     }
-   
     &:hover {
         transform: scale(1.02);
+    }
+    .qiang {
+        position: absolute;
+        font-size: 12px;
+        line-height: 18px;
+        top: 0;
+        left: 0;
+        padding: 0 20px 0 8px;
+        background: -webkit-gradient(linear,left top,right top,from(#ffe6d2),to(#fff));
+        background: -webkit-linear-gradient(left,#ffe6d2,#fff);
+        background: linear-gradient(90deg,#ffe6d2,#fff);
+        color: #f70;
+        border-radius: 6px 0 0;
     }
 }
     .listDetail {
@@ -108,6 +239,46 @@ const showListDetail = () => {
         background-color: #fff;
         border-radius: 8px;
         transition: all .5s ease-in-out;
+        overflow: hidden;
+        padding: 0px 40px;
+        box-sizing: border-box;
+        .type {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            border-bottom: 1px solid #eef1f6;
+            .priceBox {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                flex-direction: row;
+                span {
+                    font-size: 24px;
+                }
+                .button {
+                    background: linear-gradient(90deg,#00a7fa,#0076f5);
+                    padding: 0px 15px;
+                    width: 80px;
+                    height: 40px;
+                    line-height: 40px;
+                    border-radius: 10px;
+                    color: #fff;
+                    font-size: 18px;
+                    border: none;
+                    box-sizing: border-box;
+                    margin-left: 20px;
+                    text-align: center;
+                    transition: all .3s ease-in-out;
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
     }
     .showAnimate {
         height: 200px;

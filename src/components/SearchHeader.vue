@@ -103,7 +103,7 @@ const search = () => {
         height: 200px;
         background-color: #fff;
         border-radius: v-bind(radius);
-        margin: auto;
+        margin: 0 auto 10px auto;
         transform: translateY(v-bind(transitonY));
         padding: 10px 20px;
         box-sizing: border-box;     
