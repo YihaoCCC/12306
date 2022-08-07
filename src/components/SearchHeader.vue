@@ -148,9 +148,10 @@ const search = () => {
                 }                
             }
             .change {
-                width: 100px;
+                width: 24px;
                 height: 100%;
                 position: relative;
+                margin-right: 80px;
                 svg {
                     cursor: pointer;
                     transform: translateY(5px);
@@ -167,12 +168,13 @@ const search = () => {
                     transform: scale(2);
                 }
                 &::before {
+                    position: absolute;
                     color: #999;
                     content: "";
                     border-right: 1px solid #999;
-                    position: absolute;
+                    
                     bottom: 29px;
-                    right: 88px;
+                    right: 10px;
                     width: 1px;
                     height: 12px;
                     transform: scale(2);

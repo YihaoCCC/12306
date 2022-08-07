@@ -1,0 +1,26 @@
+.profile {
+    margin: 30px auto;
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    text-align: end;
+    h2 {
+        border-bottom: 1px solid #eef1f6;
+        padding: 20px;
+        display: flex;
+        margin: 0;
+        justify-content: flex-start;
+        align-items: center;   
+        img {
+            width: 45px;
+            height: 45px;
+            margin-left: 30px;
+        }
+    }
+    .form {
+        margin-top: 30px;
+        height: 300px;
+    }
+}

@@ -28,10 +28,20 @@ const routes = [
                 component: () => import('../views/book/book.vue')
             },
             {
+                path: 'orderPay',
+                name: 'orderPay',
+                component: () => import('../views/orderPay/orderPay.vue')
+            },
+            {
+                path: 'order',
+                name: 'order',
+                component: () => import('../views/order/order.vue')
+            },
+            {
                 path: 'profile',
                 name: 'profile',
                 component: () => import('../views/profile/profile.vue')
-            }
+            },
         ]
     },
     {
@@ -43,6 +53,16 @@ const routes = [
         path: '/registe',
         name: 'registe',
         component: () => import('../views/registe/registe.vue')
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('../views/notFound/404.vue')
+    },
+    {
+        path: '/:pathMatch(.*)', 
+        name: 'notfound', 
+        component: () => import('../views/notFound/404.vue')
     }
 ]
 
@@ -52,7 +72,7 @@ export const router:Router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.name === 'book') {
+    if(to.name === 'book' || to.name === 'order') {
         if(localStorage.getItem('token')) {
             next()
         } else {

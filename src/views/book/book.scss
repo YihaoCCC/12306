@@ -2,36 +2,116 @@
     margin: 15px auto;
     display: flex;
     justify-content: space-between;
+    h3 {
+        top: 100px;
+        left: 100px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        transition: all .3s ease-in-out;
+        svg {
+            transform: rotate(-90deg);
+        }
+        span {
+            padding: 10px 20px;
+            background: linear-gradient(90deg,#00a7fa,#0076f5);
+            border-radius: 20px;
+        }
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
     .leftDetail {
         width: 60%;
-        .ticketDetail {
-            height: 100px;
-            background-color: #fff;
-            border-radius: 15px;
-        }
         .passenger {
            background-color: #fff;
-           margin: 30px 0;
            border-radius: 20px;
+           
            h2 {
             margin: 0;
-            color: #666;
             padding-bottom: 15px;
             border-bottom: 1px solid #eef1f6;
-           } 
+           }
+           .choosed {
+            font-size: 14px;
+            color: #999;
+            border: 2px solid;
+            border-image: linear-gradient(to left,#00a7fa,#0076f5) 1;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin: 15px 0;
+            animation: showPassenger 1s ease-in-out forwards;
+            position: relative;
+            .name {
+                font-size: 16px;
+                font-weight: 600;
+                color: #000;
+                margin:0 0 10px 0;
+                span {
+                    font-size: 12px;
+                    font-weight: 200;
+                    color: #999;
+                    padding: 1px;
+                    border: 1px solid #999;
+                    border-radius: 5px;
+                }
+            }
+            .idCard {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+           }
+           svg {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+           }
+        }
+        .noPassenger {
+            font-size: 20px;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-align: center;
+            border-bottom: 1px solid #eef1f6;
+            font-family: "PingFang SC",miui,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,sans-serif;
+        }
+        .nowBook {
+            width: 100%;
+            border-radius: 20px;
+            height: 50px;
+            background-color: #00a7fa;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            margin: 20px 0;
         }
     }
     
     .rightDetail {
-        width: 38%;
-        .ticketDetail {
-            height: 200px;
-            border-radius: 10px;
-            background-color: #fff;
-        }
+        width: 38%; 
     }
 }
 .padding {
     padding: 30px 30px;
     box-sizing: border-box;
+}
+.baseFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+@keyframes showPassenger {
+    0% {
+        height: 10px;
+        opacity: 0;
+    }
+    100% {
+        height: 50px;
+        opacity: 1;
+    }
 }

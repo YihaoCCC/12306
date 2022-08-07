@@ -59,6 +59,7 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
         height: 150px;
     }
 }
+> 补充一下：animate适合元素初始化动画，但是transition适合元素已经存在dom树当中，animate是在元素插入dom树时候执行的动画。
 ```
 ### 2 : 判断 `dom` 元素距离顶部的距离并实时添加样式
 ```JavaScript 
@@ -167,4 +168,39 @@ setup() {
     })
     return { number, msg }
   }
+```
+### js控制浏览器后退
+
+> window.history.back()
+> 同理
+> window.history.forward()
+
+### `reactive` 包裹数组的时候
+
+```JavaScript
+let passengerList = reactive([])
+// 添加一个值
+passengerList.list.push(row)
+
+发现添加值可以做到响应式，但是删除的时候，虽然控制台值已经改变了，但是界面始终没刷新
+
+const deletePassenger = (item:any) => {
+    console.log(passengerList);
+    passengerList = passengerList.filter((i:any) => i.name !== item.name) 
+    console.log(passengerList);
+}
+
+// 改变定义结构
+
+let passengerList = reactive({
+    list: []
+})
+// 添加
+passengerList.list.push(row)
+// 删除
+const deletePassenger = (item:any) => {
+    console.log(passengerList.list);
+    passengerList.list = passengerList.list.filter((i:any) => i.name !== item.name)
+    console.log(passengerList.list);   
+}
 ```

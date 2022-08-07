@@ -60,7 +60,7 @@
                 <div class="price">
                     ￥ <span>{{ticket.priceList.erdeng}}</span>
                 </div>
-                <div class="button" @click="book(2)">抢票</div>
+                <div class="button" @click="book(2)">购票</div>
             </div> 
         </div>
         <div class="type">
@@ -69,7 +69,7 @@
                 <div class="price">
                     ￥ <span>{{ticket.priceList.yideng}}</span>
                 </div>
-                <div class="button" @click="book(1)">抢票</div>
+                <div class="button" @click="book(1)">购票</div>
             </div> 
         </div>
         <div class="type">
@@ -78,7 +78,7 @@
                 <div class="price">
                     ￥ <span>{{ticket.priceList.shangwu}}</span>
                 </div>
-                <div class="button" @click="book(0)">抢票</div>
+                <div class="button" @click="book(0)">购票</div>
             </div> 
         </div>
     </div>

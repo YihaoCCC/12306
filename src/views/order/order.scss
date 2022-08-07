@@ -1,0 +1,113 @@
+.order {
+    margin: 30px auto;
+    color: #666;
+    font-size: 14px;
+    animation: loading 3s ease-in-out forwards;
+    .buttonList {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        button {
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            background: linear-gradient(to left,#00a7fa,#0076f5);
+            margin: 0 10px;
+            border-radius: 20px;
+            transition: all .5s ease-in-out;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+    .orderItem {
+        border: 1px solid #d5d5d5;
+        margin: 20px 0;
+        .orderHeader {
+            padding: 5px 10px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #e5e5e5;
+            .detail {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                span {
+                  color: #0076f5;
+                }
+            }
+            button {
+                border: none;
+                border-radius: 20px;
+                color: #fff;
+                background: linear-gradient(to left,#00a7fa,#0076f5);
+                padding: 5px 10px;
+                transition: all .5s ease-in-out;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+        .orderContent {
+            background-color: #fff;
+            padding: 20px 30px;
+            .detail {
+                .city {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .startend {
+                        font-size: 18px;
+                        font-weight: bolder;
+                        color: black;
+                    }
+                    .status {
+                        font-size: 16px;
+                        span {
+                            color: #ff7700;
+                            em {
+                                font-size: 20px;
+                                font-weight: 600;
+                                font-style: normal;
+                            }
+                        }
+                        
+                    }
+                }
+                .data {
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+    
+    .next {
+        color: #fff;
+        font-size: 18px;
+        letter-spacing: 5px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        border: none;
+        box-sizing: border-box;
+        background: linear-gradient(to right, #00a7fa,#0076f5);
+    }
+}
+@keyframes loading {
+    0% {
+        opacity: 0;
+        height: 200px;
+    }
+    100% {
+        opacity: 1;
+        height: 1000px;
+    }
+}
+.loading {
+    text-align: center;
+    min-height: 400px;
+    h1 {
+        padding-top: 150px;
+    }
+}

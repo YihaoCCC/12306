@@ -68,4 +68,6 @@ button:focus-visible {
   width: 1200px;
   margin: auto;
 }
-
+.el-table th.el-table__cell>.cell {
+  display: flex !important;
+}
