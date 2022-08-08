@@ -2,52 +2,5 @@
     margin-top: 30px;
     h3 {
         margin: 0;
-        padding: 0 0 20px 0;
-        border-bottom: 1px solid #eef1f6;
-    }
-    .detail {
-        font-size: 16px;
-        font-weight: 600;
-        padding: 0 0 20px 0;
-        border-bottom: 1px solid #eef1f6;
-        .priceNum {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span:first-child {
-                font-weight: 600;
-                font-size: 14px;
-                color: #666;
-            }
-        }
-    }
-    .total {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 18px;
-        font-weight: bolder;
-        span {
-            font-size: 22px;
-            color: #0086f6;
-        }
-    }
-    .waitingPay {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 20px;
-        margin-bottom: 30px;
-        width: 100%;
-        background-color: #fff;
-        padding: 10px 15px;
-        .status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            h2 {
-                margin: 0 0 10px 0;
-            }
-        }
     }
 }

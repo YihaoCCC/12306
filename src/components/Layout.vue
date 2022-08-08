@@ -24,10 +24,12 @@
     }
     .leftContent {
         width: 60%;
+        background-color: #fff;
         border-radius: 20px;
     }
     .rightContent {
         width: 38%;
+        background-color: #fff;
         border-radius: 20px;
     }
 </style>
