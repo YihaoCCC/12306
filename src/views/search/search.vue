@@ -12,8 +12,7 @@
             </span>
         </div>
         <div class="SafeContent">
-            <TicketCard v-for="item in train.list " :key="item"
-                :train="item"
+            <TicketCard v-for="item in 10 " :key="item"
             
             
             ></TicketCard>

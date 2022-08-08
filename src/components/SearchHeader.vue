@@ -9,9 +9,10 @@
             <div class="train">
                 <div class="citybetween">
                     <div class="startcity"> 
-                        <el-select v-model="startCity">
+                        <input type="text" id="end" placeholder="开始城市">
+                        <!-- <el-select v-model="startCity">
                             <el-option v-for="item in cityOptions" :key="item" :label="item.label" :value="item.value" />
-                        </el-select>
+                        </el-select> -->
                         <label for="start" >
                             出发城市
                         </label>                    
@@ -20,10 +21,10 @@
                         <svg  @click="change" t="1659422665218" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2575" width="24" height="24"><path d="M900.160222 227.959537a31.994321 31.994321 0 0 0-9.758268 43.992192 447.920494 447.920494 0 1 1-139.655212-139.335268 31.994321 31.994321 0 0 0 34.233924-54.070403 511.909136 511.909136 0 1 0 159.971605 159.171747 31.994321 31.994321 0 0 0-44.792049-9.758268z" fill="#666666" p-id="2576"></path><path d="M255.954568 415.926173a31.994321 31.994321 0 0 0 31.994321 31.994321h447.920494a31.994321 31.994321 0 0 0 22.555996-54.550317l-127.977284-127.977284a31.994321 31.994321 0 0 0-45.271964 45.271964L658.603098 383.931852H287.948889a31.994321 31.994321 0 0 0-31.994321 31.994321zM767.863704 607.892099a31.994321 31.994321 0 0 0-31.994321-31.994321H287.948889a31.994321 31.994321 0 0 0-22.555996 54.550317l127.977284 127.977284a31.994321 31.994321 0 0 0 45.271964-45.271964L365.215174 639.88642H735.869383a31.994321 31.994321 0 0 0 31.994321-31.994321z" fill="#666666" p-id="2577"></path></svg>
                     </div>
                     <div class="endcity">                       
-                        <!-- <input type="text" id="end" placeholder="到达城市"> -->
-                        <el-select v-model="endCity">
+                        <input type="text" id="end" placeholder="到达城市">
+                        <!-- <el-select v-model="endCity">
                             <el-option v-for="item in cityOptions" :key="item" :label="item.label" :value="item.value" :disable='endDisable === item.value'/>
-                        </el-select>
+                        </el-select> -->
                         <label for="end">
                             到达城市 
                         </label> 
@@ -80,14 +81,14 @@ watch(startCity,
     },
 )
 onMounted(() => {
-    getCitys().then((res:any) => {
-        res.forEach((item:any) => {
-            cityOptions.push({
-                label: item.name,
-                value: item.cityId
-            })
-        });
-    })
+    // getCitys().then((res:any) => {
+    //     res.forEach((item:any) => {
+    //         cityOptions.push({
+    //             label: item.name,
+    //             value: item.cityId
+    //         })
+    //     });
+    // })
 })
 
 const change = () => {
@@ -104,7 +105,7 @@ const search = () => {
     //     time: time.value
     //    }
     // })
-    router.push(`/home/search/${startCity.value}/${endCity.value}/${time.value}`)
+    router.push(`/home/search/1/1/2022-08-081`)
 }
 </script>
     

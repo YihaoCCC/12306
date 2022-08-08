@@ -22,34 +22,36 @@
                                 d="M345.429333 303.991467a25.6 25.6 0 0 1 39.185067-32.904534l113.595733 135.3728a25.6 25.6 0 0 1-39.253333 32.904534L345.429333 303.991467z"
                                 fill="#0086f6" p-id="2396"></path>
                         </svg>
-                        <div style="margin: 0 0px 0 10px;padding:15px 20px">
+                        <div style="margin: 0 0px 0 10px;padding:15px 20px;box-sizing: border-box;">
                             <h2>待支付</h2>
                             <span>建议您尽快支付</span>
                         </div>
                     </div>
                     <div class="buttons">
                         <my-button color="gred" ButtonTitle="取消订票"></my-button>
-                        <my-button color="warning" ButtonTitle="取消订票"></my-button>
+                        <my-button color="warning" ButtonTitle="确认订票" @click="goOrder"></my-button>
                     </div>
                 </div>
                 <ticket-detail></ticket-detail>
             </template>
             <template #right>
-                <h3>价格明细</h3>
-                <div class="detail">
-                    <p>火车票</p>
-                    <div class="priceNum">
-                        <span>火车票</span>
+                <div style="padding: 20px 25px; background-color:#fff;border-radius: 20px;">
+                    <h3>价格明细</h3>
+                    <div class="detail">
+                        <p>火车票</p>
+                        <div class="priceNum">
+                            <span>火车票</span>
+                            <span>
+                                ￥ 553 × 1张
+                            </span>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <p>订单总额</p>
                         <span>
-                            ￥ 553 × 1张
+                            ￥553
                         </span>
                     </div>
-                </div>
-                <div class="total">
-                    <p>订单总额</p>
-                    <span>
-                        ￥553
-                    </span>
                 </div>
             </template>
         </layout>
@@ -62,6 +64,11 @@
 import TicketDetail from '../../components/TicketDetail.vue';
 import Layout from '../../components/Layout.vue'
 import MyButton from '../../components/MyButton.vue';
+import { useRouter } from 'vue-router';
+const router = useRouter()
+const goOrder= () => {
+    router.push('/home/order')
+}
 </script>
     
 <style lang="scss" scoped>
