@@ -21,16 +21,8 @@
     import Header from '../../components/Header.vue'
     import { onMounted, watch,ref } from 'vue';
     import {useRoute} from 'vue-router'
-    import { testapi } from './homehttp'
     import Service from '../../components/service.vue';
     const route = useRoute()
-
-    onMounted(() => {
-        testapi().then((res:any) => {
-            localStorage.setItem('name', res.name)
-            localStorage.setItem('age', res.age)
-        })         
-    })
     const searchboxwidth = ref('66%')
     const showImgBox = ref('block')
     const transitonY = ref('110px')

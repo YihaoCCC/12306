@@ -2,7 +2,7 @@
     <div class="card">
         <div class="listOpen">
             <div class="time">
-                {{ticket.startTime}}
+                {{train?.train.beginTime}}
             </div>
             <div class="city">
                 {{ticket.startCity}}
@@ -106,7 +106,16 @@ defineProps({
                 }
             }
         }
-    }
+    },
+    // seatModelList: Array,
+    // beginStation: String,
+    // beginTime: String,
+    // endStation: String,
+    // endTime: String,
+    // trainId: String,
+    // runTime: String,
+    // money: Number,
+    train: Array,
 })
 const router = useRouter()
 const showList = ref(false)

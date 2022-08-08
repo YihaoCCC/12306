@@ -62,6 +62,9 @@ import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router';
 import Registe from '../registe/registe.vue';
 
+
+import { user_login } from './loginhttp';
+
 const vue = getCurrentInstance()
 const goIndex = vue?.appContext.config.globalProperties.$goIndex
 const username = ref('')
@@ -70,11 +73,24 @@ const router = useRouter()
 const showRegister = ref(false)
 const login = () => {
     if (username.value || password.value) {
-        ElMessage({
-            type: 'success',
-            message: '登录系统成功！'
+        user_login(username.value,password.value).then((res:any) => {
+            if(res.code === 200 ) {
+                localStorage.setItem('token', res.obj.token)
+                localStorage.setItem('userId', res.obj.user.userId)
+                localStorage.setItem('username', res.obj.user.name)
+                ElMessage({
+                    type: 'success',
+                    message: res.message
+                })
+                router.push('/home/dashbord')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: '登录失败，用户名或密码错误！'
+                })
+            }
         })
-        router.push('/home/dashbord')
+        
     } else {
         ElMessage({
             type: 'warning',

@@ -14,6 +14,8 @@ import {
     ElCol,
     ElRadioGroup,
     ElRadio,
+    ElSelect,
+    ElOption,
 }
 from 'element-plus'
 
@@ -32,6 +34,8 @@ const component = [
     ElCol,
     ElRadioGroup,
     ElRadio,
+    ElSelect,
+    ElOption,
 ]
 
 export function useElementPlus(app:App):void {
