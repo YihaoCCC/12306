@@ -23,7 +23,7 @@
             <div class="backIndex" v-if="showBackIndex" @click="goIndex">
                 回到首页
             </div>
-            <div v-if="!user">
+            <div v-if="!user" class="user">
                 <div class="login" @click="goLogin">
                     <svg t="1659444481702" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3025" width="24" height="24">
@@ -36,10 +36,14 @@
                 <span class="register" @click="goLogin">
                     注册
                 </span>
+                
             </div>
-            <div v-else class="user" @click="goProfile">
-                <img src="https://joeschmoe.io/api/v1/jon" alt="">
+            <div v-else class="user" >
+                <img  src="https://joeschmoe.io/api/v1/jon" alt="">
                 {{ user }}
+                <div class=" loginOut">
+                    <span @click="loginOut">退出登录</span>
+                </div>
             </div>
             <div class="myOrder">
                 <svg t="1659508065612" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -129,13 +133,14 @@
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { onMounted, getCurrentInstance, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 const showBackIndex = ref(false)
 onMounted(() => {
-    console.log(route);
+   user.value = localStorage.getItem('username')
 })
 watch(() => route.fullPath, (value, oldValue) => {
     if (value !== '/home/dashbord') {
@@ -154,9 +159,17 @@ const goLogin = () => {
 const goOrder = () => {
     router.push('/home/order')
 }
-const user = ref('111')
+const user:any = ref('')
 const goProfile = () => {
     router.push('/home/profile')
+}
+const loginOut = () => {
+    router.push('/')
+    console.log("退出登录");
+    history.go(0)
+    ElMessage.success("退出登录成功！")
+    localStorage.setItem('username', '')
+    localStorage.setItem('token', '')
 }
 </script>
     
@@ -252,10 +265,46 @@ header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-
+        position: relative;
         img {
             width: 30px;
             height: 30px;
+        }
+        &:hover {
+            .loginOut {
+                height: 40px;
+                opacity: 1;
+            }
+        }
+        .loginOut {
+            padding: 10px 15px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 40px;
+            z-index: 100;
+            left: -15px;
+            width: 120px;
+            height: 0px;
+            opacity: 0;
+            box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
+            background-color: #fff;
+            border-radius: 20px;
+            transition: all .3s ease-in-out;
+            text-align: center;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: -4px;
+                overflow: hidden;
+                border: none;
+                left: 43%;
+                width: 10px;
+                height: 10px;
+                background-color: #fff;
+                transform: rotate(45deg);
+
+            }
         }
     }
 
@@ -322,7 +371,6 @@ header {
             box-sizing: border-box;
             z-index: 100;
             box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
-            overflow: hidden;
 
             li {
                 display: flex;
@@ -359,9 +407,7 @@ header {
                 position: absolute;
                 top: -6px;
                 overflow: hidden;
-                border-width: 0 1px 1px;
-                border-style: solid;
-                border-color: transparent transparent #e6f3fe;
+                border: none;
                 left: 43%;
                 width: 15px;
                 height: 15px;

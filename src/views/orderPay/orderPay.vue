@@ -1,5 +1,8 @@
 <template>
-    <div class="orderPay">
+    <div v-if="!loading" class="loading SafeContent">
+            <h1>正在为您占座，请稍后.......</h1>
+    </div>
+    <div v-else class="orderPay">
         <layout>
             <template #left>
                 <div class="waitingPay">
@@ -28,14 +31,14 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <my-button color="gred" ButtonTitle="取消订票"></my-button>
+                        <my-button color="gred" ButtonTitle="取消订票" @click="cancelBook"></my-button>
                         <my-button color="warning" ButtonTitle="确认订票" @click="goOrder"></my-button>
                     </div>
                 </div>
                 <ticket-detail></ticket-detail>
             </template>
             <template #right>
-                <div style="padding: 20px 25px; background-color:#fff;border-radius: 20px;">
+                <div class="borderbox">
                     <h3>价格明细</h3>
                     <div class="detail">
                         <p>火车票</p>
@@ -53,6 +56,10 @@
                         </span>
                     </div>
                 </div>
+                <div class="borderbox">
+                    <h3 style="margin-bottom: 20px;">温馨提示</h3>
+                    <span>支付越早，成功率越高喔！</span>
+                </div>
             </template>
         </layout>
     </div>
@@ -65,10 +72,26 @@ import TicketDetail from '../../components/TicketDetail.vue';
 import Layout from '../../components/Layout.vue'
 import MyButton from '../../components/MyButton.vue';
 import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import { ElMessage } from 'element-plus';
 const router = useRouter()
+const loading = ref(false)
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = true
+        ElMessage({
+            type: 'warning',
+            message: '恭喜您！占座成功，请尽快支付！'
+        })
+    },2000)
+})
 const goOrder= () => {
     router.push('/home/order')
 }
+const cancelBook =() => {
+    router.push('/home/orderDetail')
+}
+window.history.forward();
 </script>
     
 <style lang="scss" scoped>

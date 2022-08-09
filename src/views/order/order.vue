@@ -1,14 +1,12 @@
 <template>
-    <div v-if="!loading" class="loading SafeContent">
-            <h1>正在为您占座，请稍后.......</h1>
-    </div>
-    <div v-else  class="order SafeContent">
+    
+    <div class="order SafeContent">
         <div class="buttonList">
             <button @click="changeOrderType(0)">全部订单 </button>
             <button @click="changeOrderType(1)">未出行订单 </button>
             <button @click="changeOrderType(2)">已完成 </button>
         </div>
-        <div class="orderItem" v-for="item in 5" :key="item">
+        <div class="orderItem" v-for="item in 5" :key="item" @click="goDetail(item)">
             <div class="orderHeader">
                 <div class="detail">
                     <div>
@@ -57,7 +55,9 @@
 <script setup lang='ts'>
 import { ElMessage } from 'element-plus';
 import { onMounted,ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { getAllOrder} from './orderHttp'
+const router = useRouter()
 onMounted(() => {
     getAllOrder().then((res) => {
         console.log("请求测试"); 
@@ -65,11 +65,7 @@ onMounted(() => {
     })
     setTimeout(() => {
         loading.value = true
-        ElMessage({
-            type: 'success',
-            message: '恭喜您！购票成功，祝您旅行愉快！'
-        })
-    },2000)
+    },1500)
 })
 const deleteOrder = () => {
     console.log("dsaddsafadsfa");   
@@ -80,9 +76,12 @@ const changeOrderType = (type:number) => {
 }
 const loading = ref(false)
 const nextPage = () => {
-    console.log("测试");
-    
+    console.log("测试");  
 } 
+const goDetail = (id:any) => {
+    router.push('/home/orderDetail')
+    console.log(id);
+}
 </script>
     
 <style lang="scss" scoped>

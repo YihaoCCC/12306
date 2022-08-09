@@ -10,7 +10,7 @@ class ckHttp {
             let token = localStorage.getItem('token')
             if(token) {
                 config.headers.token = token
-            }
+            }     
             return config
         })
         this.axiosInstance.interceptors.response.use((res) => {

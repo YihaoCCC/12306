@@ -42,13 +42,15 @@
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import Table from '../../components/Table.vue';
 import TicketDetail from '../../components/TicketDetail.vue';
 const router = useRouter()
+const list: any[] = []
 let passengerList = reactive({
-    list: []
+    list: list
 })
 onMounted(() => {
 
@@ -63,7 +65,7 @@ const addPassenger = (row:any) => {
 const deletePassenger = (item:any) => {
     passengerList.list = passengerList.list.filter((i:any) => i.name !== item.name)   
 }
-const gridData = reactive([
+const Station:any[] = [
   {
     date: '2016-05-02',
     name: 'Jack',
@@ -84,9 +86,16 @@ const gridData = reactive([
     name: 'Jack',
     address: 'New York City',
   },
-])
+]
+const station = reactive({
+    list: Station
+})
 const goOrderPay = () => {
-    router.push('/home/orderPay')
+    if(passengerList.list.length) {
+        router.push('/home/orderPay')
+    } else {
+        ElMessage.warning('请至少选择一位乘车人！')
+    }
 }
 </script>
     

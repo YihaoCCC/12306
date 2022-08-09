@@ -38,6 +38,11 @@ const routes = [
                 component: () => import('../views/order/order.vue')
             },
             {
+                path: 'orderDetail',
+                name: 'orderDetail',
+                component: () => import('../views/orderDetail/orderDetail.vue')
+            },
+            {
                 path: 'profile',
                 name: 'profile',
                 component: () => import('../views/profile/profile.vue')
@@ -85,5 +90,8 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+    if(from.name === 'orderPay' && to.name === 'order') {
+        ElMessage.success('恭喜您！购票成功，祝您旅行愉快！')
+    } 
 })
 

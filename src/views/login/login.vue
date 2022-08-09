@@ -73,24 +73,35 @@ const router = useRouter()
 const showRegister = ref(false)
 const login = () => {
     if (username.value || password.value) {
-        user_login(username.value,password.value).then((res:any) => {
-            if(res.code === 200 ) {
-                localStorage.setItem('token', res.obj.token)
-                localStorage.setItem('userId', res.obj.user.userId)
-                localStorage.setItem('username', res.obj.user.name)
-                ElMessage({
-                    type: 'success',
-                    message: res.message
-                })
-                router.push('/home/dashbord')
-            } else {
-                ElMessage({
-                    type: 'error',
-                    message: '登录失败，用户名或密码错误！'
-                })
-            }
+        // user_login(username.value,password.value).then((res:any) => {
+        //     if(res.code === 200 ) {
+        //         localStorage.setItem('token', res.obj.token)
+        //         localStorage.setItem('userId', res.obj.user.userId)
+        //         localStorage.setItem('username', res.obj.user.name)
+        //         ElMessage({
+        //             type: 'success',
+        //             message: res.message
+        //         })
+        //         router.push('/home/dashbord')
+        //     } else {
+        //         ElMessage({
+        //             type: 'error',
+        //             message: '登录失败，用户名或密码错误！'
+        //         })
+        //     }
+        // })
+
+        
+        // 测试用例
+        localStorage.setItem('token', 'test')
+        localStorage.setItem('userId', username.value)
+        localStorage.setItem('username', username.value)
+        ElMessage({
+            type: 'success',
+            message: '登录系统成功！'
         })
         
+        router.push('/home/dashbord')
     } else {
         ElMessage({
             type: 'warning',

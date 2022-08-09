@@ -115,7 +115,7 @@ defineProps({
     // trainId: String,
     // runTime: String,
     // money: Number,
-    train: Array,
+    train: Object,
 })
 const router = useRouter()
 const showList = ref(false)
