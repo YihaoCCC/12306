@@ -2,18 +2,18 @@
 
         <div class="searchDetail" id="header">
             <div>
-                北京 - 上海 &nbsp;&nbsp;<span>单程 2022 - 08 -06</span>
+                {{scity}} - {{ecity}} &nbsp;&nbsp;<span>单程 {{route.params.time}}</span>
                 <em>
-                    （共40车次）
+                    （共查询到 <em>{{train.list.length}}</em> 车次）
                 </em>
             </div>
             <span class="type">
-                火车票 <em> &nbsp;  >  &nbsp; 北京到上海的火车票</em>
+                火车票 <em> &nbsp;  >  &nbsp; {{scity}} 到 {{ecity}} 的火车票</em>
             </span>
         </div>
         <div class="SafeContent">
-            <TicketCard v-for="item in 10 " :key="item"
-            
+            <TicketCard v-for="item in train.list " :key="item"
+                :train="item"
             
             ></TicketCard>
         </div>
@@ -21,11 +21,13 @@
 </template>
     
 <script setup lang='ts'>
-import { onMounted, reactive, watch ,watchEffect } from 'vue';
+import { onMounted, reactive, watch ,ref } from 'vue';
 import TicketCard from '../../components/TicketCard.vue';
 import { useRoute } from 'vue-router';
 import {get_search_list} from './searchhttp'
 const route = useRoute()
+const scity = ref('')
+const ecity = ref('')
 let train = reactive({
     list: []
 })
@@ -54,6 +56,11 @@ watch(() => route, (value,oldValue) => {
 const getTrainList = () => {
     get_search_list(route.params.scity, route.params.ecity, route.params.time).then((res:any) => {
         train.list = res.obj.list
+        if(res.obj.list) {
+            scity.value = res.obj.list[0].train.beginStation.city.name
+            ecity.value = res.obj.list[0].train.endStation.city.name
+        }
+        console.log("车次信息");
         console.log(train.list);
     })
 }

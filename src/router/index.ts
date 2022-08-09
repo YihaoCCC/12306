@@ -23,7 +23,7 @@ const routes = [
                 component: () => import('../views/search/search.vue')
             },
             {
-                path: 'book/:scity/:ecity/:time/:ticketType',
+                path: 'book/:trainId/:beginId/:endId/:seatTypeId/:date/:type',
                 name: 'book',
                 component: () => import('../views/book/book.vue')
             },

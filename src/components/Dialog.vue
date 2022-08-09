@@ -57,6 +57,7 @@ const ruleForm = reactive({
     sex: '男',
     idCard: '',
     phone: '',
+    userId: localStorage.getItem('userId')
 })
 // 自定义校验规则
 const checkId = (rule: any, value: any, callback: any) => {
@@ -112,6 +113,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
+         
             console.log('submit!')
             addPassenger(ruleForm)
         } else {

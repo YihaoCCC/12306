@@ -3,24 +3,24 @@
         <h2>车票信息</h2>
         <div class="time baseFlex">
             <div class="starDate">
-                08月06日
+               {{train.detail.beginDate}}
             </div>
             <div class="endDate">
-                08月07日
+                {{train.detail.endDate}}
             </div>
         </div>
         <div class="startEnd baseFlex">
             <div class="startTime">
                 <div class="time">
-                    23:12
+                    {{train.detail.beginStation?.leaveTime}}
                 </div>
                 <div class="city">
-                    北京南
+                    {{train.detail.beginStation?.station.name}}
                 </div>
             </div>
             <div class="checi">
                 <div class="name">
-                    k402
+                   {{train.detail.train?.trainId}}
                 </div>
 
                 <el-popover placement="bottom" :width="400" trigger="click">
@@ -30,17 +30,34 @@
                         </div>
                     </template>
                     <el-table :data="station.list" table-layout="fixed">
-                        <el-table-column property="date" label="date" />
-                        <el-table-column property="address" label="address" />
+                        <el-table-column property="name" label="车站" />
+                        <el-table-column property="leaveTime" label="离开时间" >
+                            <template  #default="scope">
+                                {{scope.row.leaveTime ? scope.row.leaveTime : '---'}}
+                            </template>    
+                        </el-table-column>
+
+                        <el-table-column property="arriveTime" label="到达时间" >
+                            <template  #default="scope">
+                                {{scope.row.arriveTime ? scope.row.arriveTime : '---'}}
+                            </template>  
+                        </el-table-column>
+
+                        <el-table-column property="stopTime" label="停留时间" >
+                            <template  #default="scope">
+                                {{scope.row.stopTime ? scope.row.stopTime : '---'}}
+                            </template>  
+                        </el-table-column>
+
                     </el-table>
                 </el-popover>
             </div>
             <div class="endCity">
                 <div class="time">
-                    08:46
+                    {{train.detail.endStation?.arriveTime}}
                 </div>
                 <div class="city">
-                    上海虹桥
+                    {{train.detail.endStation?.station.name}}
                 </div>
             </div>
         </div>
@@ -59,8 +76,10 @@
             <span style="color:red">待支付</span>
         </div>
         <div v-else class="trainType">
-            <span>二等座</span>
-            ￥ <em>533</em>
+            <span>{{train.detail.seatType?.name}}</span>
+            <div>
+                ￥ <em style=" color:#0076f5 ">{{train.detail?.money}}</em>
+            </div>
         </div>
     </div>
 </template>
@@ -68,16 +87,7 @@
 <script setup lang='ts'>
 import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
-const route = useRoute()
-const showPassenger = ref(true)
-watch(() => route.name, (value,oldvalue) => {
-    if(value !== "book") {
-        showPassenger.value = true
-    } else {
-        showPassenger.value = false
-    }
-},
-{immediate:true})
+import { getTicketDetail } from '../api/searchhttp';
 const Station:any[] = [
   {
     date: '2016-05-02',
@@ -103,6 +113,37 @@ const Station:any[] = [
 const station = reactive({
     list: Station
 })
+const obj = {}
+const train:any = reactive({
+    detail:obj
+})
+const route = useRoute()
+const showPassenger = ref(true)
+const {trainId,beginId,endId,seatTypeId,date,type } = route.params
+onMounted(() => {
+    getTicketDetail(trainId,beginId,endId,seatTypeId,date,type).then((res:any) => {
+        console.log('车次详情（预定界面）');
+        train.detail = res
+        console.log(train.detail);
+        station.list = res.trainRouteList.map((item:any) => {
+            return {
+                name: item.station.name,
+                leaveTime: item.leaveTime,
+                arriveTime: item.arriveTime,
+                stopTime: item.stopTime,
+            }
+        })
+    })
+})
+watch(() => route.name, (value,oldvalue) => {
+    if(value !== "book") {
+        showPassenger.value = true
+    } else {
+        showPassenger.value = false
+    }
+},
+{immediate:true})
+
 </script>
     
 <style lang="scss" scoped>

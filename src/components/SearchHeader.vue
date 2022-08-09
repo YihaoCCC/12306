@@ -57,7 +57,7 @@ import { ElMessage } from 'element-plus';
 import { toNumber } from 'lodash';
 import { ref, onMounted, reactive, watch } from 'vue';
 import {useRouter,useRoute}  from 'vue-router';
-import { getCitys } from '../api/mockhttp'
+import { getCitys } from '../api/searchhttp'
 const router = useRouter()
 const route = useRoute()
 defineProps({
@@ -90,7 +90,7 @@ onMounted(() => {
         res.forEach((item:any) => {
             city.list.push({
                 label: item.name,
-                value: item.id,
+                value: item.cityId,
             })
         });
         console.log(city.list);
