@@ -3,14 +3,14 @@
         <div class="hotel floor">
             <h1>优惠酒店</h1>
             <div class="citys">
-                <button v-for="item in citys" :key="item.id" @click="cityChange(item.id)"
+                <button v-for="item in button" :key="item.id" @click="cityChange(item.id)"
                     :class="active === item.id ? 'active' : ''">
                     {{ item.name }}
                 </button>
             </div>
 
             <div class="hotelList">
-                <card v-for="item in 4" :key="item" :show-detail="true">
+                <card v-for="item in showCitys.list" :key="item.price" :City="item" :show-detail="true">
                 </card>
             </div>
 
@@ -29,33 +29,39 @@
     
 <script setup lang='ts'>
 import Card from '../../components/Card.vue'
-import { ref, reactive } from 'vue'
-const citys = reactive([
+import { ref, reactive, onMounted } from 'vue'
+import { getHotels } from '../../api/mockhttp';
+let button  = [
     {
         id: 1,
         name: '上海'
     },
-    {
+    {   
         id: 2,
         name: '北京'
-    },
-    {
+    }, 
+    {   
         id: 3,
-        name: '广州'
-    },
-    {
-        id: 4,
-        name: '成都'
-    },
-    {
-        id: 5,
         name: '杭州'
     },
     {
+        id: 4,
+        name: '四川'
+    },
+    {
+        id: 5,
+        name: '广州'
+    },
+    {   
         id: 6,
         name: '天津'
     }
-])
+]
+let citys:any = reactive([])
+let List: any = []
+let showCitys = reactive({
+    list: List
+})
 const travelCitys = reactive([
     {
         id: 1,
@@ -83,9 +89,21 @@ const travelCitys = reactive([
     },
 ])
 const active = ref(1)
-const cityChange = (porps: any) => {
-    active.value = porps
+const cityChange = (cityId: any) => {
+    active.value = cityId
+    if(cityId === 1) {
+        showCitys.list = citys.slice(0,4)
+    } else {
+        showCitys.list = citys.slice(cityId*4-4,cityId*4)
+    }
 }
+onMounted(() => {
+    getHotels().then((res:any) => {
+        citys = res
+        showCitys.list = citys.slice(0,4)
+        console.log(showCitys.list);
+    })
+})
 </script>
     
 <style lang="scss" scoped>
