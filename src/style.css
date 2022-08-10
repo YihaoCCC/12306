@@ -71,3 +71,13 @@ button:focus-visible {
 .el-table th.el-table__cell>.cell {
   display: flex !important;
 }
+.el-input__wrapper {
+  font-size: 24px !important;
+  padding: 0 !important;
+}
+.el-input__wrapper :hover {
+  border: none !important;
+}
+.el-select .el-input.is-focus .el-input__wrapper {
+  box-shadow: unset !important;
+}
