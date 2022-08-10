@@ -22,7 +22,7 @@
                     </div>
                     <div class="endcity">                       
                         <!-- <input type="text" id="end" placeholder="到达城市"> -->
-                        <el-select v-model="endCity">
+                        <el-select v-model="endCity" class="inputDeep" :disabled="startCity?false:true">
                             <el-option v-for="item in city.list" :key="item" :label="item.label" :value="item.value" :disabled='DisableCity === item.value'/>
                         </el-select>
                         <label for="end">
@@ -81,8 +81,6 @@ watch(startCity,
         if(value !== oldValue) {
             DisableCity.value = value
         }
-        console.log(value);
-        console.log(DisableCity.value);
     },
 )
 onMounted(() => {
@@ -103,7 +101,12 @@ onMounted(() => {
 })
 
 const change = () => {
-        console.log(123);
+        let change = startCity.value
+        startCity.value = endCity.value
+        endCity.value = change
+        if(route.name === 'search') {
+            search()
+        }
     }
 const search = () => {
     if(startCity.value || endCity.value) {
@@ -183,20 +186,6 @@ const search = () => {
                 display: block;
 
             }
-            input {
-                width: 100%;
-                background-color: transparent;
-                color: black;
-                font-size: 24px;
-                font-weight: bolder;
-                border: none;
-                outline: none;
-                &:focus {
-                    & ~ label{
-                        color: #0086F6;
-                    }
-                }                
-            }
             .change {
                 width: 24px;
                 height: 100%;
@@ -270,6 +259,7 @@ const search = () => {
 <style>
 .el-input__wrapper {
     background-color: transparent !important;
+    box-shadow: none !important;
 }
             
 </style>
