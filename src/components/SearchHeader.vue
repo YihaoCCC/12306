@@ -10,7 +10,7 @@
                 <div class="citybetween">
                     <div class="startcity"> 
                         <!-- <input type="text" id="end" placeholder="开始城市"> -->
-                        <el-select v-model="startCity">
+                        <el-select v-model="startCity" filterable>
                             <el-option v-for="item in city.list" :key="item" :label="item.label" :value="item.value" />
                         </el-select>
                         <label for="start" >
@@ -22,7 +22,7 @@
                     </div>
                     <div class="endcity">                       
                         <!-- <input type="text" id="end" placeholder="到达城市"> -->
-                        <el-select v-model="endCity" class="inputDeep" :disabled="startCity?false:true">
+                        <el-select v-model="endCity" class="inputDeep" :disabled="startCity?false:true" filterable>
                             <el-option v-for="item in city.list" :key="item" :label="item.label" :value="item.value" :disabled='DisableCity === item.value'/>
                         </el-select>
                         <label for="end">
@@ -256,10 +256,19 @@ const search = () => {
     }
     
 </style>
-<style>
-.el-input__wrapper {
+<style scoped>
+:deep(.el-input__wrapper) {
     background-color: transparent !important;
     box-shadow: none !important;
 }
-            
+:deep(.el-input__wrapper :hover) {
+  border: none !important;
+}
+:deep(.el-select .el-input.is-focus .el-input__wrapper) {
+  box-shadow: unset !important;
+}
+:deep(.el-input__wrapper) {
+  font-size: 24px !important;
+  padding: 0 !important;
+}           
 </style>
