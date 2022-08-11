@@ -18,7 +18,7 @@ const routes = [
                 component: () => import('../views/dashbord/dashbord.vue')
             },
             {
-                path: 'search/:scity/:ecity/:time',
+                path: 'search/:scity/:ecity/:time/:type/:detailId',
                 name: 'search',
                 component: () => import('../views/search/search.vue')
             },
@@ -38,7 +38,7 @@ const routes = [
                 component: () => import('../views/order/order.vue')
             },
             {
-                path: 'orderDetail',
+                path: 'orderDetail/:orderId',
                 name: 'orderDetail',
                 component: () => import('../views/orderDetail/orderDetail.vue')
             },

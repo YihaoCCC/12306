@@ -14,13 +14,13 @@
         <div class="SafeContent">
             <TicketCard v-for="item in train.list " :key="item"
                 :train="item"
-            
             ></TicketCard>
         </div>
 
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { onMounted, reactive, watch ,ref } from 'vue';
 import TicketCard from '../../components/TicketCard.vue';
 import { useRoute } from 'vue-router';
@@ -54,15 +54,28 @@ watch(() => route, (value,oldValue) => {
 {deep:true}
 )
 const getTrainList = () => {
-    get_search_list(route.params.scity, route.params.ecity, route.params.time).then((res:any) => {
-        train.list = res.obj.list
-        if(res.obj.list) {
-            scity.value = res.obj.list[0].train.beginStation.city.name
-            ecity.value = res.obj.list[0].train.endStation.city.name
-        }
-        console.log("车次信息");
-        console.log(train.list);
-    })
+    if(route.params.scity){
+        get_search_list(route.params.scity, route.params.ecity, route.params.time).then((res:any) => {
+            if(res.code == 200){
+                train.list = res.obj
+                if(res.obj.length > 0) {
+                    scity.value = res.obj[0].train.beginStation.city.name
+                    ecity.value = res.obj[0].train.endStation.city.name
+                }
+                ElMessage({
+                    type:"success",
+                    message:res.message
+                })
+                console.log("车次信息");
+                console.log(train.list);
+            }else{
+                ElMessage({
+                    type:"error",
+                    message:res.message
+                })
+            }
+        })
+    }
 }
 
 </script>

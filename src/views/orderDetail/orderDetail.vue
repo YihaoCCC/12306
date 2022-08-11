@@ -3,7 +3,7 @@
         <layout>
             <template #left>
                 <div class="waitingPay">
-                    <div class="status" v-if="orderStatus === 1">
+                    <div class="status" v-if="o.order.order?.state === '待支付'">
                         <svg t="1659952331784" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="2391" width="40" height="40">
                             <path
@@ -23,15 +23,15 @@
                                 fill="#0086f6" p-id="2396"></path>
                         </svg>
                         <div style="margin: 0 0px 0 10px;padding:15px 20px;box-sizing: border-box;">
-                            <h2>待支付</h2>
-                            <span>建议尽快支付，<em style="color: red;">10分钟</em>未支付将自动取消订单</span>
+                            <h2>{{o.order.order.state}}</h2>
+                            <span>建议尽快支付,<em style="color: red;">10分钟</em>内未支付将自动取消订单</span>
                         </div>
                         <div class="buttons">
-                            <my-button color="gred" ButtonTitle="取消订票" @click="cancelBook"></my-button>
-                            <my-button color="warning" ButtonTitle="确认订票" @click="goOrder"></my-button>
+                            <my-button color="gred" ButtonTitle="取消订单" @click="cancel"></my-button>
+                            <my-button color="warning" ButtonTitle="确认支付" @click="pay"></my-button>
                         </div>
                     </div>
-                    <div class="status" v-if="orderStatus === 2">
+                    <div class="status" v-if="o.order.order?.state === '已支付' || o.order.order?.state === '抢票成功'">
                         <div style="display:flex;align-items:center;justify-content:space-between">
                             <svg t="1660034767817" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="2273" width="40" height="40">
@@ -40,16 +40,33 @@
                                     fill="#0086f6" p-id="2274"></path>
                             </svg>
                             <div style="margin: 0 0px 0 10px;padding:15px 20px;box-sizing: border-box;">
-                                <h2>已支付</h2>
+                                <h2>{{o.order.order.state}}</h2>
                                 <span>祝您旅途愉快！</span>
                             </div>
                         </div>
-                        <div class="buttons">
+                        <!-- <div class="buttons">
                             <my-button color="warning" ButtonTitle="退票" @click="cancelBook"></my-button>
                             <my-button color="default" ButtonTitle="改签" @click="goOrder"></my-button>
+                        </div> -->
+                    </div>
+                    <div class="status" v-if="o.order.order?.state === '抢票中'">
+                        <div style="display:flex;align-items:center;justify-content:space-between">
+                            <svg t="1660034767817" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="2273" width="40" height="40">
+                                <path
+                                    d="M511.08977778 1021.26933333c280.91733333 0 509.49688889-228.57955555 509.49688889-509.49688888S792.00711111 2.16177778 511.08977778 2.16177778 1.47911111 230.74133333 1.47911111 511.65866667s228.57955555 509.61066667 509.61066667 509.61066666z m0-948.33777778c241.89155555 0 438.72711111 196.83555555 438.72711111 438.72711112s-196.83555555 438.72711111-438.72711111 438.72711111c-241.89155555 0-438.72711111-196.83555555-438.72711111-438.72711111s196.72177778-438.72711111 438.72711111-438.72711112zM301.51111111 536.12088889c-13.76711111-13.76711111-13.76711111-36.18133333 0-50.06222222 13.76711111-13.76711111 36.18133333-13.76711111 50.06222222 0l118.32888889 118.32888888 247.46666667-247.46666666c13.76711111-13.76711111 36.18133333-13.76711111 50.06222222 0 13.76711111 13.76711111 13.76711111 36.18133333 0 50.06222222L494.81955555 679.36711111c-6.94044445 6.94044445-15.92888889 10.35377778-25.0311111 10.35377778s-18.09066667-3.41333333-25.03111112-10.35377778L301.51111111 536.12088889z"
+                                    fill="#0086f6" p-id="2274"></path>
+                            </svg>
+                            <div style="margin: 0 0px 0 10px;padding:15px 20px;box-sizing: border-box;">
+                                <h2>{{o.order.order.state}}</h2>
+                                <span>正在快速抢票中！</span>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <my-button color="gred" ButtonTitle="取消抢票" @click="cancel"></my-button>
                         </div>
                     </div>
-                    <div class="status" v-if="orderStatus === 3">
+                    <div class="status" v-if="o.order.order?.state === '已取消' || o.order.order?.state === '占座失败'">
                         <div style="display:flex;align-items:center;justify-content:space-between">
                             <svg t="1660035712343" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="3385" width="60" height="60">
@@ -64,7 +81,7 @@
                                     p-id="3388" fill="#0086f6"></path>
                             </svg>
                             <div style="margin: 0 0px 0 10px;padding:15px 20px;box-sizing: border-box;">
-                                <h2>已取消</h2>
+                                <h2>{{o.order.order.state}}</h2>
                                 <span>请重新购买车票！</span>
                             </div>
                         </div>
@@ -75,31 +92,31 @@
 
 
                 </div>
-                <ticket-detail></ticket-detail>
+                <ticket-detail v-for="item in o.order.details" :key="item" :detail="item"></ticket-detail>
             </template>
             <template #right>
                 <div class="borderbox">
                     <h3>价格明细</h3>
                     <div class="detail">
                         <p>火车票</p>
-                        <div class="priceNum">
+                        <div class="priceNum" v-for="item in o.order.details" :key="item">
                             <span>火车票</span>
                             <span>
-                                ￥ 553 × 1张
+                                ￥ {{item.orderDetail.ticketMoney}} × 1张
                             </span>
                         </div>
                     </div>
                     <div class="total">
                         <p>订单总额</p>
                         <span>
-                            ￥553
+                            ￥{{o.order.order?.money}}
                         </span>
                     </div>
                 </div>
-                <div class="borderbox">
+                <!-- <div class="borderbox">
                     <h3 style="margin-bottom: 20px;">温馨提示</h3>
                     <span>支付越早，成功率越高喔！</span>
-                </div>
+                </div> -->
             </template>
         </layout>
     </div>
@@ -111,16 +128,57 @@
 import TicketDetail from '../../components/TicketDetail.vue';
 import Layout from '../../components/Layout.vue'
 import MyButton from '../../components/MyButton.vue';
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue'
+import { useRouter,useRoute } from 'vue-router';
+import { ref, onMounted, reactive } from 'vue'
 import { ElMessage } from 'element-plus';
+import {getOrderDetail,cancelOrder,payOrder} from './orderDetailhttp'
 const router = useRouter()
-const orderStatus = ref(3)
-const goOrder = () => {
-    router.push('/home/order')
+const route = useRoute()
+const {orderId} = route.params
+const obj = {}
+const o:any = reactive({
+    order:obj
+})
+onMounted(() => {
+    getOrder()
+})
+const getOrder = () =>{
+    getOrderDetail(orderId).then(res =>{
+        o.order = res
+        console.log(o.order);
+    })
 }
-const cancelBook = () => {
-    router.push('/home/orderDetail')
+const pay = () => {
+    payOrder(orderId).then((res:any) =>{
+        if(res.code === 200){
+            ElMessage({
+                type:'success',
+                message:res.message
+            })
+        }else{
+            ElMessage({
+                type:'error',
+                message:res.message
+            })
+        }
+        getOrder()
+    })
+}
+const cancel = () => {
+    cancelOrder(orderId).then((res:any) =>{
+        if(res.code === 200){
+            ElMessage({
+                type:'success',
+                message:res.message
+            })
+        }else{
+            ElMessage({
+                type:'error',
+                message:res.message
+            })
+        }
+        getOrder()
+    })
 }
 const goIndex = () => {
     router.push('/')

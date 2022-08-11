@@ -1,5 +1,5 @@
 <template>
-  <el-table stripe  :data="filterTableData" max-height="220" min-height="220" style="width: 100%">
+  <el-table stripe  :data="filterTableData" max-height="250" min-height="220" style="width: 100%">
     <el-table-column width="120px" label="姓名" prop="name" />
     <el-table-column width="180px" label="身份证" prop="idCard" />
     <el-table-column width="110px" label="电话" prop="phone" />

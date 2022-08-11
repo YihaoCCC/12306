@@ -62,15 +62,18 @@
                 <div class="price">
                     ￥ <span>{{item.money}}</span>
                 </div>
-                <div class="button" @click="book(item)">{{item.ticketNum > 0 ? '购票' : '抢票'}}</div>
+                <div v-if="route.params.type === '1'" class="button" @click="book(item)">改签</div>
+                <div v-else class="button" @click="book(item)">{{item.ticketNum > 0 ? '购票' : '抢票'}}</div>
             </div> 
         </div>
     </div>
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import {changeTicket} from '../api/searchhttp'
 const route = useRoute()
 const props =defineProps({
     ticket: {
@@ -101,17 +104,49 @@ const showListDetail = () => {
 }
 // 车次 起始车站id 终止车站id 日期 座位类型 trainId:string,beginId:number,endId:number,seatTypeId:number,date: string)
 const book = (item:any) => {
-    router.push({
-        name: 'book',
-        params: {
+    if(route.params.type === '1'){
+        let detail = {
             trainId: item.trainId,
-            beginId: props.train?.train.beginStationId,
-            endId: props.train?.train.endStationId,
-            seatTypeId: item.seatTypeId,
-            date: props.train?.date,
-            type: item.ticketNum > 0 ? "普通" : "抢票"
+            beginStationId: props.train?.train.beginStationId,
+            endStationId:props.train?.train.endStationId,
+            seatTypeId:item.seatTypeId,
+            changeId:route.params.detailId,
+            date:props.train?.date
         }
-    })
+        changeTicket(detail).then((res:any) => {
+            console.log(res);
+            if(res.code === 200){
+                ElMessage({
+                    type:'success',
+                    message:res.message
+                })
+                router.push({
+                    name:'orderDetail',
+                    params:{
+                        orderId: res.obj
+                    }
+                })
+            }else{
+                ElMessage({
+                    type:'error',
+                    message:res.message
+                })
+            }
+        })
+        
+    }else{
+        router.push({
+            name: 'book',
+            params: {
+                trainId: item.trainId,
+                beginId: props.train?.train.beginStationId,
+                endId: props.train?.train.endStationId,
+                seatTypeId: item.seatTypeId,
+                date: props.train?.date,
+                type: item.ticketNum > 0 ? "普通" : "抢票"
+            }
+        })
+    }
 }
 </script>
     

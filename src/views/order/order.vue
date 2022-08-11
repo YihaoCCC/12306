@@ -3,83 +3,110 @@
     <div class="order SafeContent">
         <div class="buttonList">
             <button @click="changeOrderType(0)">全部订单 </button>
-            <button @click="changeOrderType(1)">未出行订单 </button>
-            <button @click="changeOrderType(2)">已完成 </button>
+            <button @click="changeOrderType(1)">已支付订单 </button>
+            <button @click="changeOrderType(2)">待支付订单 </button>
         </div>
-        <div class="orderItem" v-for="item in 5" :key="item" @click="goDetail(item)">
+        <div class="orderItem" v-for="item in orders.order" :key="item">
             <div class="orderHeader">
                 <div class="detail">
                     <div>
                         订单号：
                         <span>
-                            12345898111561616
+                            {{item.orderId}}
                         </span>
                     </div>
                     <div style="margin: 0 0px 0 20px;">
                         预定日期：
-                        <em>2022-08-06</em>
+                        <em>{{item.orderDate}}</em>
                     </div>
                 </div>
-                <button @click="deleteOrder">删除订单</button>
+                <button @click="deleteOrder(item.orderId)" v-if="item.state === '已取消' || item.state === '占座失败' || item.state === '抢票失败'">删除订单</button>
             </div>
 
-            <div class="orderContent">
+            <div class="orderContent" v-for="detail in item.detailList" :key="detail" @click="goDetail(item.orderId)">
                 <div class="detail">
                     <div class="city">
                         <div class="startend">
-                            北京 - 上海虹桥
+                            {{detail.beginStation.name}} - {{detail.endStation.name}}
                         </div>
                         <div class="status">
-                            <span>￥ <em>553</em></span>
-                             | {{'已完成'}}
+                            <span>￥ <em>{{item.money}}</em></span>
+                             | {{item.state}}
                         </div>
                     </div>
                     <div class="data"> 
-                      出发日期：2022-08-06 &nbsp; 00：53 至 06：53  
-                      <span>C103</span> 
+                      出发日期：{{detail.leaveDate}} 至 {{detail.arriveDate}}  
+                      <span>{{detail.trainId}}</span> 
                     </div>
                     <div class="passenger">
-                        出行人：柴渴
+                        出行人：{{detail.passenger.name}}
                     </div>
                 </div>
             </div>
         </div>
         
         
-       <div style="text-align: end;padding-right:80px">
+       <!-- <div style="text-align: end;padding-right:80px">
          <button class="next" @click="nextPage">下一页</button>
-       </div>
+       </div> -->
     </div>
 </template>
     
 <script setup lang='ts'>
 import { ElMessage } from 'element-plus';
-import { onMounted,ref } from 'vue';
+import { onMounted,ref,reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAllOrder} from './orderHttp'
+import { getAllOrder,deleteOrderById} from './orderHttp'
 const router = useRouter()
+const obj = {}
+const orders:any = reactive({
+    order:obj
+})
 onMounted(() => {
-    getAllOrder().then((res) => {
-        console.log("请求测试"); 
-        console.log(res);           
-    })
+    getOrder(0)
     setTimeout(() => {
         loading.value = true
     },1500)
 })
-const deleteOrder = () => {
-    console.log("dsaddsafadsfa");   
+const getOrder = (state:any) => {
+    getAllOrder(state).then((res) => {
+        console.log(res);
+        orders.order = res      
+    })
+}
+const deleteOrder = (orderId:any) => {
+    console.log("删除");
+    deleteOrderById(orderId).then( (res:any) =>{
+        console.log(res);
+        if(res.code === 200){
+            ElMessage({
+                type: 'success',
+                message: res.message
+            })
+            getOrder(0)
+        }else{
+            ElMessage({
+                type: 'error',
+                message: res.message
+            })
+        }
+    })   
 }
 const changeOrderType = (type:number) => {
-    // 传递userid 和 订单类别
     console.log(type);
+    getOrder(type)
 }
 const loading = ref(false)
 const nextPage = () => {
     console.log("测试");  
 } 
 const goDetail = (id:any) => {
-    router.push('/home/orderDetail')
+    router.push({
+        name:'orderDetail',
+        params:{
+            orderId:id
+        }
+    })
     console.log(id);
 }
 </script>

@@ -25,3 +25,25 @@ export const deletePassenger = (id:number) =>{
 export const addOrder = (oder:any) =>{
     return request.post('/api/order/add',oder).then(res => res)
 }
+
+export const refundTicket = (detailId:any) => {
+    return request.put(`/api/detail/refundTicket/${detailId}`).then(res => res)
+}
+
+export const cancelChange = (detailId:any) => {
+    return request.put(`/api/detail/cancelChange/${detailId}`).then(res => res)
+}
+
+export const confirmChange = (detailId:any) => {
+    return request.put(`/api/detail/confirmChange/${detailId}`).then(res => res)
+}
+
+export const changeGetCity = (detailId:any) => {
+    return request.get(`/api/detail/getCity/${detailId}`).then(res => res)
+}
+
+export const changeTicket = (detail:any) =>{
+    return request.post('/api/detail/changeTicket',detail).then(res => res)
+}
+
+
