@@ -1,7 +1,6 @@
 .orderPay {
     margin-top: 30px;
-    animation: loading 3s ease-in-out forwards;
-    overflow: hidden;
+    // animation: loading 3s ease-in-out forwards;
     h3 {
         margin: 0;
         padding: 0 0 20px 0;
@@ -35,9 +34,6 @@
         }
     }
     .waitingPay {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         border-radius: 20px;
         margin-bottom: 30px;
         width: 100%;
@@ -54,23 +50,23 @@
         }
     }
 }
-@keyframes loading {
-    0% {
-        opacity: 0;
-        height: 400px;
-    }
-    100% {
-        opacity: 1;
-        height: 500px;
-    }
-}
-.loading {
-    text-align: center;
-    min-height: 400px;
-    h1 {
-        padding-top: 150px;
-    }
-}
+// @keyframes loading {
+//     0% {
+//         opacity: 0;
+//         height: 200px;
+//     }
+//     100% {
+//         opacity: 1;
+//         height: 500px;
+//     }
+// }
+// .loading {
+//     text-align: center;
+//     min-height: 400px;
+//     h1 {
+//         padding-top: 150px;
+//     }
+// }
 .borderbox {
     padding: 20px 25px; 
     background-color:#fff;

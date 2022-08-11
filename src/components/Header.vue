@@ -3,7 +3,7 @@
         <div class="header-imgbox" @click="goIndex">
             <img src="https://webresource.c-ctrip.com/ares2/nfes/pc-home/1.0.65/default/image/logo.png" alt="">
         </div>
-        <div class="search">
+        <!-- <div class="search">
             <div class="inputbox">
                 <input placeholder="搜索车票" />
                 <button>
@@ -18,12 +18,12 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </div> -->
         <div class="rightOptions">
             <div class="backIndex" v-if="showBackIndex" @click="goIndex">
                 回到首页
             </div>
-            <div v-if="!user">
+            <div v-if="!user" class="user">
                 <div class="login" @click="goLogin">
                     <svg t="1659444481702" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3025" width="24" height="24">
@@ -36,10 +36,14 @@
                 <span class="register" @click="goLogin">
                     注册
                 </span>
+                
             </div>
             <div v-else class="user" >
                 <img  @click="goProfile" src="https://joeschmoe.io/api/v1/jon" alt="">
                 {{ user }}
+                <div class=" loginOut">
+                    <span @click="loginOut">退出登录</span>
+                </div>
             </div>
             <div class="myOrder">
                 <svg t="1659508065612" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -63,7 +67,7 @@
                                 d="M376.32 843.776h300.544c9.216 0 16.896 7.68 16.896 16.896v16.896c0 9.216-7.68 16.896-16.896 16.896h-300.544c-9.216 0-16.896-7.68-16.896-16.896v-16.896c0-9.216 7.68-16.896 16.896-16.896z m333.824-323.072c-27.648 0-50.176 23.04-50.176 51.2s22.528 51.2 50.176 51.2 50.176-23.04 50.176-51.2-22.528-51.2-50.176-51.2z m50.176-221.184c0-18.944-14.848-34.304-33.28-34.304h-400.896c-18.432 0-33.28 15.36-33.28 34.304v136.192c0 18.944 14.848 34.304 33.28 34.304h400.896c18.432 0 33.28-15.36 33.28-34.304v-136.192z m-417.792 323.584c27.648 0 50.176-23.04 50.176-51.2s-22.528-51.2-50.176-51.2-50.176 23.04-50.176 51.2c0.512 28.16 22.528 51.2 50.176 51.2z m502.272 301.056c-15.36 8.704-34.304 3.584-43.008-11.776l-68.608-120.832c-5.632 1.024-11.776 1.536-17.408 1.536H337.92c-6.144 0-11.776-0.512-17.408-1.536l-68.608 120.832c-8.704 15.36-28.16 20.48-43.008 11.776-15.36-8.704-20.48-28.672-11.776-44.032l64-112.64c-33.792-24.576-54.272-65.536-51.2-111.104l24.064-366.592c4.096-61.44 43.008-110.08 109.056-110.08h100.352c0-47.104 37.376-84.992 83.456-84.992s83.456 37.888 83.456 84.992h116.736c66.56 0 88.064 48.64 92.16 110.08l24.064 366.592c3.072 45.568-17.408 86.528-51.2 111.104l64 112.64c8.704 15.872 3.584 35.328-11.264 44.032z"
                                 fill="#89A0C2" p-id="5445"></path>
                         </svg>
-                        <span>未付款订单</span>
+                        <span>已支付订单</span>
                     </li>
                     <li class="payedorder" @click="goOrder">
                         <svg t="1659513924477" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -72,7 +76,7 @@
                                 d="M376.32 843.776h300.544c9.216 0 16.896 7.68 16.896 16.896v16.896c0 9.216-7.68 16.896-16.896 16.896h-300.544c-9.216 0-16.896-7.68-16.896-16.896v-16.896c0-9.216 7.68-16.896 16.896-16.896z m333.824-323.072c-27.648 0-50.176 23.04-50.176 51.2s22.528 51.2 50.176 51.2 50.176-23.04 50.176-51.2-22.528-51.2-50.176-51.2z m50.176-221.184c0-18.944-14.848-34.304-33.28-34.304h-400.896c-18.432 0-33.28 15.36-33.28 34.304v136.192c0 18.944 14.848 34.304 33.28 34.304h400.896c18.432 0 33.28-15.36 33.28-34.304v-136.192z m-417.792 323.584c27.648 0 50.176-23.04 50.176-51.2s-22.528-51.2-50.176-51.2-50.176 23.04-50.176 51.2c0.512 28.16 22.528 51.2 50.176 51.2z m502.272 301.056c-15.36 8.704-34.304 3.584-43.008-11.776l-68.608-120.832c-5.632 1.024-11.776 1.536-17.408 1.536H337.92c-6.144 0-11.776-0.512-17.408-1.536l-68.608 120.832c-8.704 15.36-28.16 20.48-43.008 11.776-15.36-8.704-20.48-28.672-11.776-44.032l64-112.64c-33.792-24.576-54.272-65.536-51.2-111.104l24.064-366.592c4.096-61.44 43.008-110.08 109.056-110.08h100.352c0-47.104 37.376-84.992 83.456-84.992s83.456 37.888 83.456 84.992h116.736c66.56 0 88.064 48.64 92.16 110.08l24.064 366.592c3.072 45.568-17.408 86.528-51.2 111.104l64 112.64c8.704 15.872 3.584 35.328-11.264 44.032z"
                                 fill="#89A0C2" p-id="5445"></path>
                         </svg>
-                        <span>已完成订单</span>
+                        <span>待支付订单</span>
                     </li>
                     <div class="line">
                     </div>
@@ -129,13 +133,14 @@
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { onMounted, getCurrentInstance, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 const showBackIndex = ref(false)
 onMounted(() => {
-    console.log(route);
+   user.value = localStorage.getItem('username')
 })
 watch(() => route.fullPath, (value, oldValue) => {
     if (value !== '/home/dashbord') {
@@ -154,9 +159,17 @@ const goLogin = () => {
 const goOrder = () => {
     router.push('/home/order')
 }
-const user = ref('111')
+const user:any = ref('')
 const goProfile = () => {
     router.push('/home/profile')
+}
+const loginOut = () => {
+    router.push('/')
+    console.log("退出登录");
+    history.go(0)
+    ElMessage.success("退出登录成功！")
+    localStorage.setItem('username', '')
+    localStorage.setItem('token', '')
 }
 </script>
     
@@ -252,10 +265,46 @@ header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-
+        position: relative;
         img {
             width: 30px;
             height: 30px;
+        }
+        &:hover {
+            .loginOut {
+                height: 40px;
+                opacity: 1;
+            }
+        }
+        .loginOut {
+            padding: 10px 15px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 40px;
+            z-index: 100;
+            left: -15px;
+            width: 120px;
+            height: 0px;
+            opacity: 0;
+            box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
+            background-color: #fff;
+            border-radius: 20px;
+            transition: all .3s ease-in-out;
+            text-align: center;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: -4px;
+                overflow: hidden;
+                border: none;
+                left: 43%;
+                width: 10px;
+                height: 10px;
+                background-color: #fff;
+                transform: rotate(45deg);
+
+            }
         }
     }
 
@@ -297,6 +346,8 @@ header {
             .orderHidden {
                 opacity: 1;
                 height: 160px;
+                padding: 16px 10px;
+                z-index: 100;
             }
 
             svg {
@@ -316,13 +367,10 @@ header {
             background-color: #fff;
             top: 38px;
             left: -20px;
-            z-index: 100;
             border-radius: 10px;
-            padding: 16px 10px;
+            padding: 0;
             box-sizing: border-box;
-            z-index: 100;
             box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
-            overflow: hidden;
 
             li {
                 display: flex;
@@ -359,9 +407,7 @@ header {
                 position: absolute;
                 top: -6px;
                 overflow: hidden;
-                border-width: 0 1px 1px;
-                border-style: solid;
-                border-color: transparent transparent #e6f3fe;
+                border: none;
                 left: 43%;
                 width: 15px;
                 height: 15px;

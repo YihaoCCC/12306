@@ -3,7 +3,7 @@
         <div class="hotel floor">
             <h1>优惠酒店</h1>
             <div class="citys">
-                <button v-for="item in citys" :key="item.id" @click="cityChange(item.id)"
+                <button v-for="item in button" :key="item.id" @click="cityChange(item.id)"
                     :class="active === item.id ? 'active' : ''">
                     {{ item.name }}
                 </button>
@@ -65,15 +65,15 @@ let button = [
     },
     {
         id: 3,
-        name: '广州'
+        name: '杭州'
     },
     {
         id: 4,
-        name: '成都'
+        name: '四川'
     },
     {
         id: 5,
-        name: '杭州'
+        name: '广州'
     },
     {
         id: 6,

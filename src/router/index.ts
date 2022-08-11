@@ -18,12 +18,12 @@ const routes = [
                 component: () => import('../views/dashbord/dashbord.vue')
             },
             {
-                path: 'search/:scity/:ecity/:time',
+                path: 'search/:scity/:ecity/:time/:type/:detailId',
                 name: 'search',
                 component: () => import('../views/search/search.vue')
             },
             {
-                path: 'book/:scity/:ecity/:time/:ticketType',
+                path: 'book/:trainId/:beginId/:endId/:seatTypeId/:date/:type',
                 name: 'book',
                 component: () => import('../views/book/book.vue')
             },
@@ -36,6 +36,11 @@ const routes = [
                 path: 'order',
                 name: 'order',
                 component: () => import('../views/order/order.vue')
+            },
+            {
+                path: 'orderDetail/:orderId',
+                name: 'orderDetail',
+                component: () => import('../views/orderDetail/orderDetail.vue')
             },
             {
                 path: 'profile',
@@ -85,5 +90,8 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+    if(from.name === 'orderPay' && to.name === 'order') {
+        ElMessage.success('恭喜您！购票成功，祝您旅行愉快！')
+    } 
 })
 
