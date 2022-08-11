@@ -39,7 +39,7 @@
                 
             </div>
             <div v-else class="user" >
-                <img  src="https://joeschmoe.io/api/v1/jon" alt="">
+                <img  @click="goProfile" src="https://joeschmoe.io/api/v1/jon" alt="">
                 {{ user }}
                 <div class=" loginOut">
                     <span @click="loginOut">退出登录</span>

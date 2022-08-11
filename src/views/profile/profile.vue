@@ -33,9 +33,26 @@
                     <el-button v-if="!change" type="primary" @click="change = !change">修改个人信息</el-button>
                 </el-form-item>
             </el-form>
-            <el-button type="warning">修改密码</el-button>
+            <el-button type="warning" @click="drawer = !drawer">修改密码</el-button>
         </div>
-
+        <el-drawer v-model="drawer">
+            <template #title>
+                <h4>修改密码</h4>
+            </template>
+            <template #default>
+                <div>
+                    <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
+                    <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
+                    <el-input v-model="repetPassword" placehoder="请重新输入密码"></el-input>
+                </div>
+            </template>
+            <template #footer>
+                <div style="flex: auto">
+                    <el-button @click="drawer = !drawer">取消修改</el-button>
+                    <el-button type="primary" @click="confirmClick">confirm</el-button>
+                </div>
+            </template>
+        </el-drawer>
     </div>
 </template>
     
@@ -43,6 +60,10 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 
+const oldPassword = ref('')
+const newPassword = ref('')
+const repetPassword = ref('')
+const drawer = ref(false)
 const change = ref(false)
 
 const ruleFormRef = ref<FormInstance>()
@@ -136,6 +157,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+}
+const confirmClick =() => {
+    
 }
 </script>
     

@@ -16,6 +16,9 @@ import {
     ElRadio,
     ElSelect,
     ElOption,
+    ElSkeleton,
+    ElSkeletonItem,
+    ElDrawer,
 }
 from 'element-plus'
 
@@ -36,6 +39,9 @@ const component = [
     ElRadio,
     ElSelect,
     ElOption,
+    ElSkeleton,
+    ElSkeletonItem,
+    ElDrawer
 ]
 
 export function useElementPlus(app:App):void {
