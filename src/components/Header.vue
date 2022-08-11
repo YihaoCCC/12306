@@ -346,6 +346,8 @@ header {
             .orderHidden {
                 opacity: 1;
                 height: 160px;
+                padding: 16px 10px;
+                z-index: 100;
             }
 
             svg {
@@ -365,11 +367,9 @@ header {
             background-color: #fff;
             top: 38px;
             left: -20px;
-            z-index: 100;
             border-radius: 10px;
-            padding: 16px 10px;
+            padding: 0;
             box-sizing: border-box;
-            z-index: 100;
             box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
 
             li {

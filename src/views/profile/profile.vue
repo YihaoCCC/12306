@@ -41,15 +41,25 @@
             </template>
             <template #default>
                 <div>
-                    <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
-                    <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
-                    <el-input v-model="repetPassword" placehoder="请重新输入密码"></el-input>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">旧密码：</div>
+                       <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
+                    </div>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">新密码：</div>
+                        <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
+                    </div>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">新密码：</div>
+                       <el-input v-model="repetPassword" placeholder="请再次输入新密码"></el-input>
+                    </div>
+                    
                 </div>
             </template>
             <template #footer>
                 <div style="flex: auto">
                     <el-button @click="drawer = !drawer">取消修改</el-button>
-                    <el-button type="primary" @click="confirmClick">confirm</el-button>
+                    <el-button type="primary" @click="confirmClick">提交</el-button>
                 </div>
             </template>
         </el-drawer>

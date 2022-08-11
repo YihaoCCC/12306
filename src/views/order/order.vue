@@ -6,7 +6,7 @@
             <button @click="changeOrderType(1)">未出行订单 </button>
             <button @click="changeOrderType(2)">已完成 </button>
         </div>
-        <div class="orderItem" v-for="item in 5" :key="item" @click="goDetail(item)">
+        <div class="orderItem" v-for="item in 6" :key="item" @click="goDetail(item)">
             <div class="orderHeader">
                 <div class="detail">
                     <div>
