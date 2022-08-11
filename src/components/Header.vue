@@ -37,8 +37,8 @@
                     注册
                 </span>
             </div>
-            <div v-else class="user" @click="goProfile">
-                <img src="https://joeschmoe.io/api/v1/jon" alt="">
+            <div v-else class="user" >
+                <img  @click="goProfile" src="https://joeschmoe.io/api/v1/jon" alt="">
                 {{ user }}
             </div>
             <div class="myOrder">
