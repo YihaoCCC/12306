@@ -33,7 +33,7 @@
                     <el-button v-if="!change" type="primary" @click="change = !change">修改个人信息</el-button>
                 </el-form-item>
             </el-form>
-            <el-button type="warning">修改密码</el-button>
+            <el-button type="warning" @click="drawer = !drawer">修改密码</el-button>
         </div>
         <el-drawer v-model="drawer">
             <template #title>
