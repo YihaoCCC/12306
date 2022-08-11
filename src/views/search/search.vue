@@ -2,25 +2,35 @@
 
         <div class="searchDetail" id="header">
             <div>
-                北京 - 上海 &nbsp;&nbsp;<span>单程 2022 - 08 -06</span>
+                {{scity}} - {{ecity}} &nbsp;&nbsp;<span>单程 {{route.params.time}}</span>
                 <em>
-                    （共40车次）
+                    （共查询到 <em>{{train.list.length}}</em> 车次）
                 </em>
             </div>
             <span class="type">
-                火车票 <em> &nbsp;  >  &nbsp; 北京到上海的火车票</em>
+                火车票 <em> &nbsp;  >  &nbsp; {{scity}} 到 {{ecity}} 的火车票</em>
             </span>
         </div>
         <div class="SafeContent">
-            <TicketCard v-for="item in 10 " :key="item"></TicketCard>
+            <TicketCard v-for="item in train.list " :key="item"
+                :train="item"
+            ></TicketCard>
         </div>
 
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
+import { onMounted, reactive, watch ,ref } from 'vue';
 import TicketCard from '../../components/TicketCard.vue';
-import { onMounted } from 'vue';
-
+import { useRoute } from 'vue-router';
+import {get_search_list} from './searchhttp'
+const route = useRoute()
+const scity = ref('')
+const ecity = ref('')
+let train = reactive({
+    list: []
+})
 onMounted(() => {
     let dom:any = document.getElementById('header')
     document.addEventListener('scroll', () => {
@@ -34,7 +44,40 @@ onMounted(() => {
             dom.style.boxShadow = ''
         }
     })
+    getTrainList()
 })
+watch(() => route, (value,oldValue) => {
+    if(route.name !== 'dashbord') {
+        getTrainList()
+    }
+},
+{deep:true}
+)
+const getTrainList = () => {
+    if(route.params.scity){
+        get_search_list(route.params.scity, route.params.ecity, route.params.time).then((res:any) => {
+            if(res.code == 200){
+                train.list = res.obj
+                if(res.obj.length > 0) {
+                    scity.value = res.obj[0].train.beginStation.city.name
+                    ecity.value = res.obj[0].train.endStation.city.name
+                }
+                ElMessage({
+                    type:"success",
+                    message:res.message
+                })
+                console.log("车次信息");
+                console.log(train.list);
+            }else{
+                ElMessage({
+                    type:"error",
+                    message:res.message
+                })
+            }
+        })
+    }
+}
+
 </script>
     
 <style lang="scss" scoped>

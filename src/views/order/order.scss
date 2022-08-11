@@ -2,7 +2,7 @@
     margin: 30px auto;
     color: #666;
     font-size: 14px;
-    animation: loading 3s ease-in-out forwards;
+    animation: loading 2s ease-in-out forwards;
     .buttonList {
         display: flex;
         justify-content: start;
@@ -23,6 +23,10 @@
     .orderItem {
         border: 1px solid #d5d5d5;
         margin: 20px 0;
+        transition: all .3s ease-in-out;
+        &:hover {
+            transform: scale(1.03);
+        }
         .orderHeader {
             padding: 5px 10px;
             height: 30px;
@@ -53,6 +57,15 @@
         .orderContent {
             background-color: #fff;
             padding: 20px 30px;
+            &:nth-child(3) {
+                .detail {
+                    .city {
+                        .status {
+                            display: none;
+                        }
+                    }
+                }
+            }
             .detail {
                 .city {
                     display: flex;
@@ -96,12 +109,11 @@
 }
 @keyframes loading {
     0% {
-        opacity: 0;
         height: 200px;
+        opacity: 0;
     }
     100% {
         opacity: 1;
-        height: 1000px;
     }
 }
 .loading {

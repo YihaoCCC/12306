@@ -2,19 +2,19 @@
     <div class="card">
         <div class="listOpen">
             <div class="time">
-                {{ticket.startTime}}
+                {{train?.train.beginTime}}
             </div>
             <div class="city">
-                {{ticket.startCity}}
+                {{train?.train.beginStation.name}}
             </div>
         </div>
         <div class="duringTime">
             <div class="haoshi">
-                {{ticket.haoshi}}
+                {{train?.train.runTime}}
             </div>
             <div class="line"></div>
             <div class="checi">
-                <span>{{ticket.checi}}</span>
+                <span>{{train?.train.trainId}}</span>
                 <svg t="1659703610329" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="3077" width="16" height="16">
                     <path
@@ -34,18 +34,20 @@
         </div>
         <div class="listto">
             <div class="time">
-                {{ticket.endTime}}
+                {{train?.train.endTime}}
             </div>
             <div class="city">
-                {{ticket.endCity}}
+                {{train?.train.endStation.name}}
             </div>
         </div>
         <div class="priceBox">
             <div class="price">
-                ￥ <span>{{ticket.price}}</span>
+                ￥ <span>{{train?.seatModelList[0].money}}</span>
             </div>
             <div class="torage">
-                8月22日12:30开售,可预约抢票,开售自动抢
+                <div v-for="item in train?.seatModelList">
+                   <span>{{item.name}}</span> {{item.ticketNum}} <span>张</span>
+                </div>
             </div>
         </div>
         <div class="order" :style="showList ? 'background: #f70' : ''" @click="showListDetail">订</div>
@@ -54,40 +56,26 @@
         </div>
     </div>
     <div class="listDetail" :class="showList ? 'showAnimate' : ''">
-        <div class="type">
-            二等座
+        <div class="type" v-for="item in train?.seatModelList" :key="item.name">
+            {{item.name}}
             <div class="priceBox">
                 <div class="price">
-                    ￥ <span>{{ticket.priceList.erdeng}}</span>
+                    ￥ <span>{{item.money}}</span>
                 </div>
-                <div class="button" @click="book(2)">购票</div>
-            </div> 
-        </div>
-        <div class="type">
-            一等座
-            <div class="priceBox">
-                <div class="price">
-                    ￥ <span>{{ticket.priceList.yideng}}</span>
-                </div>
-                <div class="button" @click="book(1)">购票</div>
-            </div> 
-        </div>
-        <div class="type">
-            商务座
-            <div class="priceBox">
-                <div class="price">
-                    ￥ <span>{{ticket.priceList.shangwu}}</span>
-                </div>
-                <div class="button" @click="book(0)">购票</div>
+                <div v-if="route.params.type === '1'" class="button" @click="book(item)">改签</div>
+                <div v-else class="button" @click="book(item)">{{item.ticketNum > 0 ? '购票' : '抢票'}}</div>
             </div> 
         </div>
     </div>
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-defineProps({
+import { useRouter, useRoute } from 'vue-router'
+import {changeTicket} from '../api/searchhttp'
+const route = useRoute()
+const props =defineProps({
     ticket: {
         type :Object,
         default : () => {
@@ -106,23 +94,59 @@ defineProps({
                 }
             }
         }
-    }
+    },
+    train: Object,
 })
 const router = useRouter()
 const showList = ref(false)
 const showListDetail = () => {
     showList.value = !showList.value
 }
-const book = (ticketType:number) => {
-    router.push({
-        name: 'book',
-        params: {
-            ticketType,
-            scity: 'shanghai',
-            ecity: 'beijing',
-            time: '2022-8-03'
+// 车次 起始车站id 终止车站id 日期 座位类型 trainId:string,beginId:number,endId:number,seatTypeId:number,date: string)
+const book = (item:any) => {
+    if(route.params.type === '1'){
+        let detail = {
+            trainId: item.trainId,
+            beginStationId: props.train?.train.beginStationId,
+            endStationId:props.train?.train.endStationId,
+            seatTypeId:item.seatTypeId,
+            changeId:route.params.detailId,
+            date:props.train?.date
         }
-    })
+        changeTicket(detail).then((res:any) => {
+            console.log(res);
+            if(res.code === 200){
+                ElMessage({
+                    type:'success',
+                    message:res.message
+                })
+                router.push({
+                    name:'orderDetail',
+                    params:{
+                        orderId: res.obj
+                    }
+                })
+            }else{
+                ElMessage({
+                    type:'error',
+                    message:res.message
+                })
+            }
+        })
+        
+    }else{
+        router.push({
+            name: 'book',
+            params: {
+                trainId: item.trainId,
+                beginId: props.train?.train.beginStationId,
+                endId: props.train?.train.endStationId,
+                seatTypeId: item.seatTypeId,
+                date: props.train?.date,
+                type: item.ticketNum > 0 ? "普通" : "抢票"
+            }
+        })
+    }
 }
 </script>
     
@@ -199,9 +223,14 @@ const book = (ticketType:number) => {
             font-weight: 700;
         }
         .torage {
-            text-align: end;
+            display: flex;
+            justify-content: space-between;
             font-size: 12px;
             color: #f70;
+            span {
+                color: #999; 
+                font-size: 12px;
+            }
         }
     }
     .order {

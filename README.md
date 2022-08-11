@@ -204,3 +204,25 @@ const deletePassenger = (item:any) => {
     console.log(passengerList.list);   
 }
 ```
+
+### element-ui如何局部更改样式
+使用 `:deep()` 包裹，使用样式穿透修改局部的el组件样式
+> 不同的css预处理器支持样式穿透的符号不同，css可以用>>>，而scss等不支持>>>，支持/deep/，而在vue中用::v-deep
+```css
+<style scoped>
+:deep(.el-input__wrapper) {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+:deep(.el-input__wrapper :hover) {
+  border: none !important;
+}
+:deep(.el-select .el-input.is-focus .el-input__wrapper) {
+  box-shadow: unset !important;
+}
+:deep(.el-input__wrapper) {
+  font-size: 24px !important;
+  padding: 0 !important;
+}           
+</style>
+```

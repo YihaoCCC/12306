@@ -3,7 +3,7 @@
         <div class="leftContent">
             <slot name="left"></slot>
         </div>
-        <div class="rightContent padding">
+        <div class="rightContent">
             <slot name="right"></slot>
         </div>
     </div>    
@@ -14,10 +14,6 @@
 </script>
     
 <style scoped lang="scss">
-    .padding {
-        padding: 30px 30px;
-        box-sizing: border-box;
-    }
     .layout {
         display: flex;
         justify-content: space-between;

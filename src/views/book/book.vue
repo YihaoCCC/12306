@@ -31,7 +31,7 @@
                 </div>
                 <Table @choose-passenger="addPassenger"></Table>
             </div>
-            <button class="nowBook" @click="goOrderPay">
+            <button class="nowBook" @click="goOrderDetail">
                 现在订票
             </button>
         </div>
@@ -42,28 +42,40 @@
 </template>
     
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus';
 import { onMounted, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 import Table from '../../components/Table.vue';
 import TicketDetail from '../../components/TicketDetail.vue';
+import {addOrder} from './bookhttp'
 const router = useRouter()
+const route = useRoute()
+const list: any[] = []
 let passengerList = reactive({
-    list: []
+    list: list
 })
 onMounted(() => {
 
 })
 
 const goback = () => {
-    window.history.back()
+    router.push('/')
 }
 const addPassenger = (row:any) => {
-    passengerList.list.push(row)
+    if(passengerList.list.length === 0){
+        passengerList.list.push(row)
+    }else{
+        ElMessage({
+            type:'error',
+            message:"只能添加一个乘客"
+        })
+    }
+    
 }
 const deletePassenger = (item:any) => {
     passengerList.list = passengerList.list.filter((i:any) => i.name !== item.name)   
 }
-const gridData = reactive([
+const Station:any[] = [
   {
     date: '2016-05-02',
     name: 'Jack',
@@ -84,9 +96,64 @@ const gridData = reactive([
     name: 'Jack',
     address: 'New York City',
   },
-])
-const goOrderPay = () => {
-    router.push('/home/orderPay')
+]
+const station = reactive({
+    list: Station
+})
+const goOrderDetail = () => {
+    if(passengerList.list.length) {
+        console.log(passengerList.list);
+        let list:any = []
+        passengerList.list.forEach(item=>{
+            list.push({
+                passengerId:item.id,
+                date:route.params.date,
+                trainId:route.params.trainId,
+                beginStationId:route.params.beginId,
+                endStationId:route.params.endId,
+                seatTypeId:route.params.seatTypeId
+            })
+        })
+        let order = {
+            userId: localStorage.getItem('userId'),
+            type: route.params.type,
+            detailList: list
+        }
+        console.log(order);
+        addOrder(order).then((res:any) => {
+            console.log(res);
+            if(res.code === 200){
+                ElMessage({
+                    type:'success',
+                    message:res.message
+                })
+                router.push({
+                    name:'orderDetail',
+                    params:{
+                        orderId:res.obj
+                    }
+                })
+            }else if(res.code === 500){
+                ElMessage({
+                    type:'error',
+                    message:res.message
+                })
+                router.push({
+                    name:'orderDetail',
+                    params:{
+                        orderId:res.obj
+                    }
+                })
+            }else{
+                ElMessage({
+                    type:'error',
+                    message:res.message
+                })
+            }
+        })
+    } else {
+        ElMessage.warning('请至少选择一位乘车人！')
+    }
 }
 </script>
     

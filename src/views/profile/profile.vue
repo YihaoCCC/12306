@@ -35,7 +35,34 @@
             </el-form>
             <el-button type="warning">修改密码</el-button>
         </div>
-
+        <el-drawer v-model="drawer">
+            <template #title>
+                <h4>修改密码</h4>
+            </template>
+            <template #default>
+                <div>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">旧密码：</div>
+                       <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
+                    </div>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">新密码：</div>
+                        <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
+                    </div>
+                    <div style="display: flex;justify-content:space-between;algin-item:center;margin: 10px 0;">
+                       <div style="width:100px">新密码：</div>
+                       <el-input v-model="repetPassword" placeholder="请再次输入新密码"></el-input>
+                    </div>
+                    
+                </div>
+            </template>
+            <template #footer>
+                <div style="flex: auto">
+                    <el-button @click="drawer = !drawer">取消修改</el-button>
+                    <el-button type="primary" @click="confirmClick">提交</el-button>
+                </div>
+            </template>
+        </el-drawer>
     </div>
 </template>
     
@@ -43,6 +70,10 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 
+const oldPassword = ref('')
+const newPassword = ref('')
+const repetPassword = ref('')
+const drawer = ref(false)
 const change = ref(false)
 
 const ruleFormRef = ref<FormInstance>()
@@ -136,6 +167,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+}
+const confirmClick =() => {
+    
 }
 </script>
     

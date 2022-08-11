@@ -1,5 +1,5 @@
 <template>
-  <el-table stripe  :data="filterTableData" max-height="220" min-height="220" style="width: 100%">
+  <el-table stripe  :data="filterTableData" max-height="250" min-height="220" style="width: 100%">
     <el-table-column width="120px" label="姓名" prop="name" />
     <el-table-column width="180px" label="身份证" prop="idCard" />
     <el-table-column width="110px" label="电话" prop="phone" />
@@ -29,13 +29,15 @@
   <Dialog 
   :dialogVisible="showDialog"
   @closeModel="closeModel"
-  @addSuccessNeedRefresh = 'addPassenger'
+  @addSuccessNeedRefresh = 'addPassenger1'
   
   ></Dialog>
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus';
+import { computed, reactive, ref, onMounted } from 'vue'
+import { getPassenger, addPassenger,deletePassenger } from '../api/searchhttp';
 import Dialog from '../components/Dialog.vue'
 interface User {
     id: number,
@@ -64,6 +66,10 @@ const handleDelete = (index: number, row: User) => {
     console.log(tableData.userList);
     tableData.userList = tableData.userList.filter((item) => item.id !== row.id )
     console.log(tableData.userList);
+    deletePassenger(row.id).then(res =>{
+      console.log(res);
+      
+    })
 }
 const confirm = (index: number, row: User) => {
     console.log("确认删除");
@@ -92,40 +98,31 @@ let tableData = reactive({
     myself: 0,
     idCard: 411624199912102266,
     phone: 16622903269
-  },
-  {
-    id: 4,
-    name: '柴渴',
-    myself: 1,
-    idCard: 411624199912102266,
-    phone: 16622903269
-  },
-  {
-    id: 5,
-    name: '熊中尉',
-    myself: 0,
-    idCard: 411624199912102266,
-    phone: 16622903269
-  },
-  {
-    id: 5,
-    name: '苏聪杰',
-    myself: 0,
-    idCard: 411624199912102266,
-    phone: 16622903269
-  },
+  }
 ]
 })
 // 增加乘车人
 const showDialog = ref(false)
-const addPassenger = (getClidrenMessage:any) => {
+const addPassenger1 = (getClidrenMessage:any) => {
+
     console.log(getClidrenMessage);
+    addPassenger(getClidrenMessage).then(() => {
+      getPassenger().then((res:any) => {
+        tableData.userList = res
+        ElMessage.success 
+      })
+      console.log("父组件收到值，刷新");
+    })
     closeModel()
-    console.log("父组件收到值，刷新");
     
-    
+
 }   
 const closeModel = () => {
     showDialog.value = false
 }
+onMounted(() => {
+  getPassenger().then((res:any) => {
+    tableData.userList = res 
+  })
+})
 </script>
