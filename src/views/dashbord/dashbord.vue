@@ -10,8 +10,31 @@
             </div>
 
             <div class="hotelList">
-                <card v-for="item in showCitys.list" :key="item.price" :City="item" :show-detail="true">
-                </card>
+                <el-skeleton :loading="loading" animated style="display: flex; justify-content:space-between;align-items:center;width: 100%;">
+                    <template #template >
+                        <div v-for="item in 4">
+                            <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
+                            <div style="padding: 14px">
+                                <el-skeleton-item variant="h3" style="width: 50%" />
+                                <div style="
+                                    display: flex;
+                                    align-items: center;
+                                    justify-items: space-between;
+                                    margin-top: 16px;
+                                    height: 16px;
+                                    ">
+                                    <el-skeleton-item variant="text" style="margin-right: 16px" />
+                                    <el-skeleton-item variant="text" style="width: 30%" />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template #default>
+                        <card v-for="item in showCitys.list" :key="item.price" :City="item" :show-detail="true">
+                        </card>
+                    </template>
+                </el-skeleton>
+
             </div>
 
         </div>
@@ -31,16 +54,16 @@
 import Card from '../../components/Card.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { getHotels } from '../../api/mockhttp';
-let button  = [
+let button = [
     {
         id: 1,
         name: '上海'
     },
-    {   
+    {
         id: 2,
         name: '北京'
-    }, 
-    {   
+    },
+    {
         id: 3,
         name: '杭州'
     },
@@ -52,12 +75,12 @@ let button  = [
         id: 5,
         name: '广州'
     },
-    {   
+    {
         id: 6,
         name: '天津'
     }
 ]
-let citys:any = reactive([])
+let citys: any = reactive([])
 let List: any = []
 let showCitys = reactive({
     list: List
@@ -89,19 +112,22 @@ const travelCitys = reactive([
     },
 ])
 const active = ref(1)
+const loading = ref(true)
 const cityChange = (cityId: any) => {
     active.value = cityId
-    if(cityId === 1) {
-        showCitys.list = citys.slice(0,4)
+    if (cityId === 1) {
+        showCitys.list = citys.slice(0, 4)
     } else {
-        showCitys.list = citys.slice(cityId*4-4,cityId*4)
+        showCitys.list = citys.slice(cityId * 4 - 4, cityId * 4)
     }
 }
 onMounted(() => {
-    getHotels().then((res:any) => {
+
+    getHotels().then((res: any) => {
         citys = res
-        showCitys.list = citys.slice(0,4)
+        showCitys.list = citys.slice(0, 4)
         console.log(showCitys.list);
+        loading.value = false
     })
 })
 </script>
