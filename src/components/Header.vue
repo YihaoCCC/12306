@@ -274,6 +274,7 @@ header {
             .loginOut {
                 height: 40px;
                 opacity: 1;
+                visibility: visible;
             }
         }
         .loginOut {
@@ -286,6 +287,7 @@ header {
             width: 120px;
             height: 0px;
             opacity: 0;
+            visibility: hidden;
             box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
             background-color: #fff;
             border-radius: 20px;
@@ -346,8 +348,7 @@ header {
             .orderHidden {
                 opacity: 1;
                 height: 160px;
-                padding: 16px 10px;
-                z-index: 100;
+                visibility: visible;
             }
 
             svg {
@@ -363,15 +364,17 @@ header {
             width: 140px;
             height: 0px;
             opacity: 0;
+            visibility: hidden;
             transition: all .5s;
             background-color: #fff;
             top: 38px;
             left: -20px;
             border-radius: 10px;
-            padding: 0;
+            padding: 16px 10px;
             box-sizing: border-box;
             box-shadow: 0 4px 30px rgba(72, 140, 235, 0.351);
-
+            z-index: 100;
+            
             li {
                 display: flex;
                 align-items: center;
