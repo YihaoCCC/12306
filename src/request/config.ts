@@ -1,6 +1,5 @@
 import {  AxiosRequestConfig } from "axios";
-
-let BASE_URL:string = 'http://localhost:5173' // 到底什么用
+let BASE_URL:any = import.meta.env.VITE_BASE_URL
 const TIME_OUT:number = 5000
 
 export const config:AxiosRequestConfig = {
